@@ -32,10 +32,10 @@
     "prettier": "3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint",
+    "*.{js,jsx,ts,tsx}": "eslint --max-warnings=10",
     "*.{json,js,ts,jsx,tsx,html}": "prettier --write --ignore-unknown"
   }
 }
