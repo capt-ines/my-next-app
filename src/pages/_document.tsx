@@ -1,7 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
-  const bbebb: any = 90;
+  const bbebb: number = "string";
   return (
     <Html lang="en">
       <Head />

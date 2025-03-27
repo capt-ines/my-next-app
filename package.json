@@ -35,11 +35,7 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint"
-    ],
-    "*.{json,js,ts,jsx,tsx,html}": [
-      "prettier --write --ignore-unknown"
-    ]
+    "*.{js,jsx,ts,tsx}": "eslint",
+    "*.{json,js,ts,jsx,tsx,html}": "prettier --write --ignore-unknown"
   }
 }
