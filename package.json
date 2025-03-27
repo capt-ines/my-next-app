@@ -35,7 +35,7 @@
     "typescript": "^5.8.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --max-warnings=10",
+    "*.{js,jsx,ts,tsx}": "eslint --quiet",
     "*.{json,js,ts,jsx,tsx,html}": "prettier --write --ignore-unknown"
   }
 }
