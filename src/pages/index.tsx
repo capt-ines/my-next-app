@@ -11,6 +11,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const testVar: number = "90";
+
 export default function Home() {
   return (
     <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
@@ -23,6 +25,7 @@ export default function Home() {
           height={38}
           priority
         />
+        <h1 className="text-9xl">Test</h1>
         <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm/6 sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
