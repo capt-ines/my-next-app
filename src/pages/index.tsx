@@ -23,7 +23,7 @@ export default function Home() {
           height={38}
           priority
         />
-        <h1 className="text-9xl">Test</h1>
+        <h1 className="text-9xl>Test</h1>
         <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm/6 sm:text-left">
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
