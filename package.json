@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
