@@ -1,0 +1,4 @@
+TODO: 
+- hover jak tutaj, highlight marker: https://thestory.is/pl/journal/design-token/
+- handcrafted feel
+- highly customizable, individual
