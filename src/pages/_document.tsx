@@ -4,7 +4,7 @@ import { ServerStyleSheet } from "styled-components";
 function MyDocument() {
   return (
     <Html>
-      <Head />
+      <Head></Head>
       <body>
         <Main />
         <NextScript />

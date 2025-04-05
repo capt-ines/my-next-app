@@ -1,4 +1,5 @@
 TODO: 
+- app which helps envisioning a dream self.
 - hover jak tutaj, highlight marker: https://thestory.is/pl/journal/design-token/
 - handcrafted feel
-- highly customizable, individual
+- highly customizable, individual, mood, immersive
