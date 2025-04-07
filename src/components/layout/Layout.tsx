@@ -8,10 +8,12 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="relative">
-      <Header />
-      <main>{children}</main>
-      <Footer />
+    <div className="bg-background">
+      <div className="relative mx-6">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 }

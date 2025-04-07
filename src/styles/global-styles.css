@@ -8,19 +8,23 @@
   --color-secondary-variant: var(--secondary-variant);
   --color-on-secondary: var(--on-secondary);
   --color-background: var(--background);
+  --color-background-dark: var(--background-dark);
   --color-on-background: var(--on-background);
   --color-surface: var(--surface);
   --color-on-surface: var(--on-surface);
   --color-error: var(--error);
   --color-on-error: var(--on-error);
+  --color-glow: var(--glow);
 }
 
 @layer base {
   :root {
     --primary: #bb677f80;
+    --on-primary: #843c50;
     --secondary: #86e0fc80;
-    --background: #e6e6e6;
-    --on-background: rgb(45, 45, 45);
+    --background: #63474e;
+    --on-background: rgb(77, 77, 77);
+    --glow: #bb677f80;
   }
 
   .dark {
