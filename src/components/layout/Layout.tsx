@@ -8,7 +8,7 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="bg-background">
+    <div className="bg-background overflow-hidden">
       <div className="relative mx-6">
         <Header />
         <main>{children}</main>

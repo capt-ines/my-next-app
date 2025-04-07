@@ -7,7 +7,7 @@ const MouseLight = () => {
   return (
     <motion.div
       animate={{ x, y }}
-      transition={{ type: "keyframes" }}
+      transition={{ type: "tween" }}
       className="to-background from-glow absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial to-70% lg:inline"
     ></motion.div>
   );

@@ -19,11 +19,11 @@
 
 @layer base {
   :root {
-    --primary: #bb677f80;
+    --primary: #bb677f;
     --on-primary: #843c50;
     --secondary: #86e0fc80;
-    --background: #63474e;
-    --on-background: rgb(77, 77, 77);
+    --background: #2c131b;
+    --on-background: rgb(223, 223, 223);
     --glow: #bb677f80;
   }
 

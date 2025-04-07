@@ -10,11 +10,11 @@ const Header = () => {
   }
 
   return (
-    <div className="absolute right-0 left-0 w-full pt-8 pb-3">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-1">
-          <h1 className="text-primary">soulscape</h1>
-          <Logo className="text-primary" />
+    <div className="absolute right-0 left-0 w-full pt-6">
+      <div className="flex items-center justify-between">
+        <div className="m-2 flex items-center gap-1">
+          <h1 className="text-white">soulscape</h1>
+          <Logo className="text-white" />
         </div>
         <HamburgerMenu />
         {/* <Button onClick={toggleTheme} /> */}
