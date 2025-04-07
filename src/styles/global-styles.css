@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-variant: var(--primary-variant);
+  --color-on-primary: var(--on-primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-variant: var(--secondary-variant);
+  --color-on-secondary: var(--on-secondary);
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+}
+
+@layer base {
+  :root {
+    --primary: #bb677f80;
+    --secondary: #86e0fc80;
+    --background: #e6e6e6;
+    --on-background: rgb(45, 45, 45);
+  }
+
+  .dark {
+    /* .dark → overrides when a .dark class is on the <html> or <body> */
+    --primary: #b052cd;
+    --secondary: #a0cd52;
+    --background: #0a2b32;
+    --on-background: white;
+    --surface: #365d6c;
+    --error: #c21e25 /* #818274 */;
+  }
+}
+
+@layer components {
+  .btn {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+  }
+}

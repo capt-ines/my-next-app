@@ -1,9 +1,6 @@
 import React from "react";
-import Footer from "../ui/Footer";
-import { GlobalStyle } from "@/styles/GlobalStyle";
-import { ThemeProvider } from "styled-components";
-import { theme } from "./themes";
 import Header from "../ui/Header";
+import Footer from "../ui/Footer";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,12 +8,11 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <div className="relative">
       <Header />
       <main>{children}</main>
       <Footer />
-    </ThemeProvider>
+    </div>
   );
 }
 
