@@ -1,13 +1,17 @@
-import Image from "next/image";
 import HeroSection from "@/components/ui/HeroSection";
+import IndexLayout from "@/components/layout/IndexLayout";
 
-export default function Home() {
+function Home() {
   return (
     <>
       <HeroSection />
-      <section className="h-screen">
-        <p className="text-amber-300">test</p>
-      </section>
+      <section className="h-screen"></section>
     </>
   );
 }
+
+Home.getLayout = function getLayout(page: React.ReactNode) {
+  return <IndexLayout>{page}</IndexLayout>;
+};
+
+export default Home;

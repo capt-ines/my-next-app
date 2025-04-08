@@ -7,11 +7,14 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-function Layout({ children }: LayoutProps) {
+function IndexLayout({ children }: LayoutProps) {
   return (
-    <div className="bg-background">
-      <div className="mx-6">
-        <Header />
+    <div className="bg-background overflow-hidden">
+      <MouseLight />
+      <div className="relative mx-6">
+        <div className="absolute right-0 left-0">
+          <Header />
+        </div>
         <main>{children}</main>
       </div>
       <Footer />
@@ -19,4 +22,4 @@ function Layout({ children }: LayoutProps) {
   );
 }
 
-export default Layout;
+export default IndexLayout;

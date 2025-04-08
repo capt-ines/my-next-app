@@ -15,9 +15,10 @@ const nunito = Nunito_Sans({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
+
   return (
     <>
-      <MouseLight />
       <style jsx global>{`
         html {
           font-family: ${nunito.style.fontFamily};
@@ -30,9 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
           font-size: 1.875rem;
         } */
       `}</style>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {getLayout(<Component {...pageProps} />)};
     </>
   );
 }

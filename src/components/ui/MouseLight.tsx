@@ -1,14 +1,28 @@
-import React, { useEffect } from "react";
-import useMousePosition from "@/hooks/useMousePosition.js";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const MouseLight = () => {
-  const { x, y } = useMousePosition();
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const scrollX = window.scrollX || 0;
+      const scrollY = window.scrollY || 0;
+      setPosition({
+        x: event.clientX + scrollX,
+        y: event.clientY + scrollY,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <motion.div
-      animate={{ x, y }}
+      animate={{ x: position.x, y: position.y }}
       transition={{ type: "tween" }}
-      className="to-background from-glow absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial to-70% lg:inline"
+      className="from-glow pointer-events-none absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial to-transparent to-70% lg:inline"
     ></motion.div>
   );
 };
