@@ -9,7 +9,7 @@ interface LayoutProps {
 
 function IndexLayout({ children }: LayoutProps) {
   return (
-    <div className="bg-background overflow-hidden">
+    <div className="overflow-hidden bg-slate-900">
       <MouseLight />
       <div className="relative mx-6">
         <div className="absolute right-0 left-0">

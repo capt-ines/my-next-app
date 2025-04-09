@@ -8,9 +8,6 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import Link from "next/link";
 
 const Header = () => {
-  function toggleTheme() {
-    document.documentElement.classList.toggle("dark");
-  }
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -18,13 +15,11 @@ const Header = () => {
       <div className="flex items-center justify-between">
         <Link href="/">
           <div className="m-2 flex items-center gap-1">
-            <h1 className="text-white">soulscape</h1>
-            <Logo className="text-white" />
+            <h1 className="text-foreground">soulscape</h1>
+            <Logo className="text-foreground" />
           </div>
         </Link>
         {isDesktop ? <Navbar /> : <HamburgerMenu />}
-
-        {/* <Button onClick={toggleTheme} /> */}
       </div>
     </div>
   );
