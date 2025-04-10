@@ -14,7 +14,7 @@ const HamburgerMenu = () => {
     <nav>
       <button
         onClick={toggleMenu}
-        className="group my-2 flex cursor-pointer flex-col items-center gap-1"
+        className="group -my-4 -mr-6 flex cursor-pointer flex-col items-center gap-1 p-6"
       >
         <div className="flex gap-1">
           <div
@@ -64,7 +64,7 @@ const HamburgerMenu = () => {
               "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
-          ></div>
+          />
           <div
             className={clsx(
               "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",

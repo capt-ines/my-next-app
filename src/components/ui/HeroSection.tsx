@@ -35,7 +35,7 @@ const HeroSection = () => {
         >
           <div>
             <h1
-              className={`text-center text-xl transition duration-1000 sm:text-2xl ${isClicked ? "text-transparent" : "text-accent"}`}
+              className={`text-center text-xl transition duration-1000 min-[400px]:text-2xl min-[480px]:text-3xl ${isClicked ? "text-transparent" : "text-accent"}`}
             >
               Illuminate your soul’s path.
             </h1>
