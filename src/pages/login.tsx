@@ -12,11 +12,12 @@ function Login() {
   return (
     <>
       <motion.div
+        className="mx-content"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <Container style={"max-w-96 my-6"}>
+        <Container style={"max-w-96 mx-auto"}>
           <form className="flex flex-col gap-3 text-center">
             <p className="mb-1 text-xl font-semibold">
               Sign in to your account

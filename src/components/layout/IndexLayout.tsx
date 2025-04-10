@@ -15,7 +15,7 @@ function IndexLayout({ children }: LayoutProps) {
         <div className="absolute right-0 left-0">
           <Header />
         </div>
-        <main className="mx-6">{children}</main>
+        <main className="mx-6 mb-20">{children}</main>
       </div>
       <Footer />
     </div>

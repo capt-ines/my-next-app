@@ -1,9 +1,14 @@
 import React from "react";
 
-const Container = ({ children, style }) => {
+interface ContainerProps {
+  children: React.ReactNode;
+  style?: string;
+}
+
+const Container: React.FC<ContainerProps> = ({ children, style = "" }) => {
   return (
     <div
-      className={`aero mx-auto rounded-lg border-1 px-3 py-3 shadow-xs backdrop-blur-xs min-[400px]:px-9 sm:py-5 ${style}`}
+      className={`aero rounded-lg border-1 px-3 py-3 shadow-xs min-[400px]:px-9 sm:py-5 ${style}`}
     >
       {children}
     </div>

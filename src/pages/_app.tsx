@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import Layout from "../components/layout/Layout";
-import { Zeyada, Nunito_Sans } from "next/font/google";
+import { Zeyada, Nunito, Italiana } from "next/font/google";
 import "../styles/global-styles.css";
 import { Button } from "@/components/ui/button";
 
@@ -9,10 +9,14 @@ const zeyada = Zeyada({
   weight: "400",
 });
 
-const nunito = Nunito_Sans({
+const nunito = Nunito({
   subsets: ["latin"],
-  display: "swap",
-  weight: "200",
+  weight: ["200", "300", "400"],
+});
+
+const italiana = Italiana({
+  subsets: ["latin"],
+  weight: "400",
 });
 
 function toggleTheme() {
@@ -24,17 +28,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <style jsx global>{`
+      {/* <style jsx global>{`
         html {
-          font-family: ${nunito.style.fontFamily};
           color: var(--foreground);
           background-color: black;
         }
-        /* h1 {
-          font-family: ${zeyada.style.fontFamily};
-          font-size: 1.875rem;
-        } */
-      `}</style>
+      `}</style> */}
       {getLayout(<Component {...pageProps} />)}
       <Button className="fixed bottom-0 left-0" onClick={toggleTheme} />
     </>
