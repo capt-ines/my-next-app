@@ -93,7 +93,7 @@ const HamburgerMenu = () => {
         <li className="transition duration-400 hover:scale-110">
           Find inspiration
         </li>
-        <li className="transition duration-400 hover:scale-110">
+        <li translate="no" className="transition duration-400 hover:scale-110">
           Soulscape blog
         </li>
       </ul>

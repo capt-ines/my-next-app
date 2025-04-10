@@ -31,7 +31,7 @@ const HeroSection = () => {
         className="flex h-screen items-center"
       >
         <div
-          className={`bg-foreground mx-auto flex aspect-square w-full max-w-md min-w-3xs flex-col items-center justify-center rounded-full px-5 shadow-[0_0_50px_var(--color-accent)] transition duration-1000 ease-out hover:shadow-[0_0_200px_var(--color-accent)] sm:px-10 ${isClicked ? "bg-foreground/30 scale-150" : "hover:scale-105"}`}
+          className={`bg-foreground mx-auto flex aspect-square w-full max-w-md min-w-3xs flex-col items-center justify-center rounded-full px-5 shadow-[0_0_30px_#ffffff7f,0_0_5px_,0_0_20px_var(--accent),0_0_100px_var(--accent)] transition duration-1000 ease-out hover:shadow-[0_0_40px_#ffffff7f,0_0_5px_,0_0_60px_var(--accent),0_0_300px_var(--accent)] sm:px-10 ${isClicked ? "bg-foreground/30 scale-150" : "hover:scale-105"}`}
         >
           <div>
             <h1

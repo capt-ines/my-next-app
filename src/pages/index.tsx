@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 
@@ -66,10 +66,14 @@ function Home() {
               <h3>Journal</h3>
             </Container>
           </article>
-          <Link href="/register">
-            <Button className="neon" variant={"outline"}>
-              Start creating
-            </Button>
+          <Link
+            href="/register"
+            className={buttonVariants({
+              variant: "outline",
+              className: "neon mx-auto w-fit",
+            })}
+          >
+            Start creating
           </Link>
         </section>
       </Container>

@@ -7,9 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import React from "react";
-
-function About({}) {
+function About() {
   return (
     <div className="mx-content">
       <Breadcrumb>

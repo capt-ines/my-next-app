@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input
+      id="" // TODO: add id prop
       type={type}
       data-slot="input"
       className={cn(

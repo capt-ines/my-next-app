@@ -8,11 +8,11 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="from-accent/80 flex min-h-screen flex-col justify-between overflow-hidden bg-linear-to-b to-transparent">
-      <div className="block">
-        <Header />
-        <main className="mt-4 mb-20 md:mt-6">{children}</main>
-      </div>
+    <div className="from-accent/80 min-h-screen overflow-hidden bg-linear-to-b to-transparent">
+      <Header />
+      <main className="mt-4 mb-20 min-h-[calc(100vh-180px)] md:mt-6">
+        {children}
+      </main>
       <Footer />
     </div>
   );

@@ -21,7 +21,7 @@ const Navbar = () => {
         <li className="transition duration-400 hover:scale-110">
           <button>Find inspiration</button>
         </li>
-        <li className="transition duration-400 hover:scale-110">
+        <li translate="no" className="transition duration-400 hover:scale-110">
           <button>Soulscape blog</button>
         </li>
       </ul>

@@ -50,7 +50,7 @@ function Login() {
               <PiFacebookLogoThin />
             </Button>
             <div className="flex items-center justify-center gap-2">
-              <span>New to Soulscape?</span>
+              <span translate="no">New to Soulscape?</span>
               <div className="link">
                 <Link href="/register">
                   <span> Create an account</span>

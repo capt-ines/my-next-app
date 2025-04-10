@@ -17,7 +17,7 @@ function Register() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <Container style={"max-w-96 mx-auto"}>
+        <Container style="max-w-96 mx-auto">
           <form className="flex flex-col gap-3 text-center">
             <p className="mb-1 text-xl font-semibold">Create your account</p>
             <div className="text-left">
@@ -34,10 +34,12 @@ function Register() {
             </div>
 
             <Button>Create account</Button>
+
             <div className="flex items-center justify-between gap-3">
-              <div className="bg-on-background h-0.5 w-full"></div>
+              <div className="bg-foreground h-px w-full"></div>
               <span className="text-xs">OR</span>
-              <div className="bg-on-background h-0.5 w-full"></div>
+              <div className="bg-foreground h-px w-full"></div>
+              {/* TODO: change to pseudoelement */}
             </div>
             <Button variant={"outline"}>
               Create account with Pinterest <PiPinterestLogoThin />
@@ -49,12 +51,10 @@ function Register() {
               Create account with Facebook <PiFacebookLogoThin />
             </Button>
             <div className="flex items-center justify-center gap-2">
-              <span>Already have an account?</span>
-              <div className="link">
-                <Link href="/login">
-                  <span> Sign in</span>
-                </Link>
-              </div>
+              Already have an account?
+              <Link className="link" href="/login">
+                Sign in
+              </Link>
             </div>
           </form>
         </Container>
