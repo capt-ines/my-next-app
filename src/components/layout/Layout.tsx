@@ -8,11 +8,9 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="bg-global-background flex h-screen flex-col justify-between">
-      <div className="mx-6">
-        <Header />
-        <main className="mt-8 mb-20">{children}</main>
-      </div>
+    <div className="from-accent/80 overflow-hidden bg-linear-to-b to-transparent">
+      <Header />
+      <main className="mx-6 mb-20">{children}</main>
       <Footer />
     </div>
   );

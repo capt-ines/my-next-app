@@ -1,27 +1,30 @@
 import React from "react";
-import { Button } from "./button";
-import Image from "next/image";
-import Logo from "../../../public/logospiral";
+// import Logo from "../../../public/logospiral";
 import HamburgerMenu from "./HamburgerMenu";
 import Navbar from "./Navbar";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { PiSpiralFill } from "react-icons/pi";
+
 import Link from "next/link";
 
 const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <div className="w-full pt-6">
+    <header className="mx-6 pt-6">
       <div className="flex items-center justify-between">
         <Link href="/">
-          <div className="m-2 flex items-center gap-1">
+          <div className="m-2 flex items-center gap-0.5">
             <h1 className="text-foreground">soulscape</h1>
-            <Logo className="text-foreground" />
+            <PiSpiralFill
+              size={20}
+              className="text-foreground animate-quickspin"
+            />
           </div>
         </Link>
         {isDesktop ? <Navbar /> : <HamburgerMenu />}
       </div>
-    </div>
+    </header>
   );
 };
 

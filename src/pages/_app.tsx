@@ -2,7 +2,6 @@ import type { AppProps } from "next/app";
 import Layout from "../components/layout/Layout";
 import { Zeyada, Nunito_Sans } from "next/font/google";
 import "../styles/global-styles.css";
-import MouseLight from "@/components/ui/MouseLight";
 import { Button } from "@/components/ui/button";
 
 const zeyada = Zeyada({
@@ -13,7 +12,7 @@ const zeyada = Zeyada({
 const nunito = Nunito_Sans({
   subsets: ["latin"],
   display: "swap",
-  weight: "300",
+  weight: "200",
 });
 
 function toggleTheme() {
@@ -28,16 +27,15 @@ export default function App({ Component, pageProps }: AppProps) {
       <style jsx global>{`
         html {
           font-family: ${nunito.style.fontFamily};
-          background-color: var(--global-background);
           color: var(--foreground);
-          font-size: 16px;
+          background-color: black;
         }
         /* h1 {
           font-family: ${zeyada.style.fontFamily};
           font-size: 1.875rem;
         } */
       `}</style>
-      {getLayout(<Component {...pageProps} />)};
+      {getLayout(<Component {...pageProps} />)}
       <Button className="fixed bottom-0 left-0" onClick={toggleTheme} />
     </>
   );

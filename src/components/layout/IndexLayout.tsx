@@ -9,13 +9,13 @@ interface LayoutProps {
 
 function IndexLayout({ children }: LayoutProps) {
   return (
-    <div className="overflow-hidden bg-slate-900">
+    <div className="from-accent/20 overflow-hidden bg-linear-to-b to-transparent">
       <MouseLight />
-      <div className="relative mx-6">
+      <div className="relative">
         <div className="absolute right-0 left-0">
           <Header />
         </div>
-        <main>{children}</main>
+        <main className="mx-6">{children}</main>
       </div>
       <Footer />
     </div>
