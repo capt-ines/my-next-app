@@ -21,7 +21,7 @@ const HeroSection = () => {
       <motion.div
         animate={isClicked ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className={`absolute h-screen w-screen scale-120 transition-colors duration-2000 ${isClicked ? "bg-accent z-100" : "bg-global-background -z-50"}`}
+        className={`absolute h-screen w-screen scale-120 transition-colors duration-2000 ${isClicked ? "bg-global-background z-100" : "bg-accent -z-50"}`}
       ></motion.div>
 
       <motion.section
@@ -38,7 +38,6 @@ const HeroSection = () => {
               className={`text-center text-xl transition duration-1000 min-[400px]:text-2xl min-[480px]:text-3xl ${isClicked ? "text-transparent" : "text-accent"}`}
             >
               Illuminate your soul’s path.
-              {/* TODO: dark: illuminate, light: color */}
             </h1>
             <p
               className={`min-[400px]:text-md text-center text-sm transition duration-1000 min-[480px]:text-lg ${isClicked ? "text-transparent" : "text-accent"}`}
@@ -51,7 +50,7 @@ const HeroSection = () => {
           <Button
             onClick={() => handlePingAndRedirect("/register")}
             variant={"secondary"}
-            className={`absolute translate-y-16 cursor-pointer text-xs transition min-[480px]:mt-8 sm:text-sm ${isClicked ? "bg-transparent text-transparent duration-1000" : "duration-500 hover:scale-105"}`}
+            className={`bg-accent absolute translate-y-16 cursor-pointer text-xs transition min-[480px]:mt-8 sm:text-sm ${isClicked ? "bg-transparent text-transparent duration-1000" : "duration-500 hover:scale-105"}`}
           >
             Get started
           </Button>

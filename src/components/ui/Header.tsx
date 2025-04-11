@@ -3,12 +3,15 @@ import React from "react";
 import HamburgerMenu from "./HamburgerMenu";
 import Navbar from "./Navbar";
 import { PiSpiralFill } from "react-icons/pi";
-
 import Link from "next/link";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { usePathname } from "next/navigation";
 
-const Header = ({ color }) => {
+const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const pathname = usePathname();
+  const isIndex = pathname === "/";
+  const color = isIndex ? "white" : "foreground";
 
   return (
     <header className="mx-content flex items-center justify-between pt-4">
@@ -23,7 +26,7 @@ const Header = ({ color }) => {
           />
         </div>
       </Link>
-      {isDesktop ? <Navbar color={color} /> : <HamburgerMenu color={color} />}
+      {isDesktop ? <Navbar /> : <HamburgerMenu />}
     </header>
   );
 };

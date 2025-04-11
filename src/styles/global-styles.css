@@ -113,12 +113,11 @@
     --radius: 0.625rem;
 
     --global-background: theme(colors.zinc.200);
-    --index-background: theme(colors.zinc.600);
+    --index-background: theme(colors.zinc.700);
     --index-background2: theme(colors.white);
 
     --background: theme(colors.white);
     --foreground: theme(colors.black);
-    /* TODO: foreground white only on index layout */
 
     --primary: theme(colors.white);
     --primary-foreground: theme(colors.black);
@@ -167,7 +166,7 @@
     --primary: theme(colors.zinc.900);
     --primary-foreground: theme(colors.white);
 
-    --secondary: theme(colors.slate.300);
+    --secondary: theme(colors.slate.500);
     --secondary-foreground: theme(colors.white);
 
     --card: oklch(0.205 0 0);

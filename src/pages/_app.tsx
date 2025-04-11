@@ -8,9 +8,7 @@ function toggleTheme() {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  const getLayout =
-    Component.getLayout ||
-    ((page) => <Layout color="foreground">{page}</Layout>);
+  const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>);
 
   return (
     <>

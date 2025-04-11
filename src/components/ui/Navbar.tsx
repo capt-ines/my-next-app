@@ -1,6 +1,10 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const Navbar = ({ color }) => {
+const Navbar = () => {
+  const pathname = usePathname();
+  const isIndex = pathname === "/";
+  const color = isIndex ? "white" : "foreground";
   return (
     <nav>
       <ul className={`flex gap-6 text-${color}`}>

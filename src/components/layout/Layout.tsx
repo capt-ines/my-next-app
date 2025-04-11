@@ -19,7 +19,7 @@ function Layout({ children }: LayoutProps) {
         <Particle />
       </div>
       <div className="bg-global-background/30 min-h-screen min-w-screen overflow-hidden">
-        <Header color="foreground" />
+        <Header />
         <main className="mt-4 mb-20 min-h-[calc(100vh-160px)] md:mt-6">
           {children}
         </main>
