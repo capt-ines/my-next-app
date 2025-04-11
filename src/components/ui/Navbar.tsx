@@ -1,28 +1,23 @@
 import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = ({ color }) => {
   return (
     <nav>
-      <ul className="flex gap-6">
+      <ul className={`flex gap-6 text-${color}`}>
         <li className="transition duration-400 hover:scale-110">
-          <Link href="/register">
-            <button className="transition duration-400 active:scale-120">
-              Sign in
-            </button>
-          </Link>
+          <Link href="/register">Sign in</Link>
         </li>
-        <Link href="/about">
-          <li className="transition duration-400 hover:scale-110">
-            <button className="transition duration-400 active:scale-120">
-              Our mission
-            </button>
-          </li>
-        </Link>
+
         <li className="transition duration-400 hover:scale-110">
-          <button>Find inspiration</button>
+          <Link href="/about"> Our mission </Link>
         </li>
+
+        <li className="transition duration-400 hover:scale-110">
+          Find inspiration
+        </li>
+
         <li translate="no" className="transition duration-400 hover:scale-110">
-          <button>Soulscape blog</button>
+          Soulscape blog
         </li>
       </ul>
     </nav>

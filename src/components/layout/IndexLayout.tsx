@@ -16,7 +16,7 @@ function IndexLayout({ children }: LayoutProps) {
 
       <div className="relative">
         <div className="absolute right-0 left-0">
-          <Header />
+          <Header color="white" />
         </div>
         <main className="mx-6 mb-20">{children}</main>
       </div>

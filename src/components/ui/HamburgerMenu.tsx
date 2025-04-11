@@ -3,7 +3,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
-const HamburgerMenu = () => {
+const HamburgerMenu = ({ color }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,41 +19,19 @@ const HamburgerMenu = () => {
         <div className="flex gap-1">
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           ></div>
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           ></div>
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
-              isOpen ? "scale-[900%]" : "group-hover:scale-120",
-            )}
-          ></div>
-        </div>
-        <div className="flex gap-1">
-          <div
-            className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
-              isOpen ? "scale-[900%]" : "group-hover:scale-120",
-            )}
-          ></div>
-          <div
-            className={clsx(
-              "z-[51] h-1 w-1 transform rounded-full transition duration-600",
-              isOpen
-                ? "bg-background scale-[90000%]"
-                : "bg-foreground group-hover:scale-120",
-            )}
-          ></div>
-          <div
-            className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           ></div>
@@ -61,19 +39,39 @@ const HamburgerMenu = () => {
         <div className="flex gap-1">
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
+              isOpen ? "scale-[900%]" : "group-hover:scale-120",
+            )}
+          ></div>
+          <div
+            className={clsx(
+              `bg-${color} z-[51] h-1 w-1 transform rounded-full transition duration-600`,
+              isOpen ? "bg-primary scale-[90000%]" : "group-hover:scale-120",
+            )}
+          ></div>
+          <div
+            className={clsx(
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
+              isOpen ? "scale-[900%]" : "group-hover:scale-120",
+            )}
+          ></div>
+        </div>
+        <div className="flex gap-1">
+          <div
+            className={clsx(
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           />
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           ></div>
           <div
             className={clsx(
-              "bg-foreground z-50 h-1 w-1 transform rounded-full transition-transform duration-100",
+              `bg-${color} z-50 h-1 w-1 transform rounded-full transition-transform duration-100`,
               isOpen ? "scale-[900%]" : "group-hover:scale-120",
             )}
           ></div>

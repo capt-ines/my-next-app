@@ -113,7 +113,7 @@
     --radius: 0.625rem;
 
     --global-background: theme(colors.zinc.200);
-    --index-background: theme(colors.zinc.500);
+    --index-background: theme(colors.zinc.600);
     --index-background2: theme(colors.white);
 
     --background: theme(colors.white);
@@ -167,7 +167,7 @@
     --primary: theme(colors.zinc.900);
     --primary-foreground: theme(colors.white);
 
-    --secondary: theme(colors.slate.400);
+    --secondary: theme(colors.slate.300);
     --secondary-foreground: theme(colors.white);
 
     --card: oklch(0.205 0 0);

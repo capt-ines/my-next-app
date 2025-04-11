@@ -35,12 +35,7 @@ function Register() {
 
             <Button>Create account</Button>
 
-            <div className="flex items-center justify-between gap-3">
-              <div className="bg-foreground h-px w-full"></div>
-              <span className="text-xs">OR</span>
-              <div className="bg-foreground h-px w-full"></div>
-              {/* TODO: change to pseudoelement */}
-            </div>
+            <span className="text-xs">OR</span>
             <Button variant={"outline"}>
               Create account with Pinterest <PiPinterestLogoThin />
             </Button>

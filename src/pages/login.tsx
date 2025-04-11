@@ -34,11 +34,7 @@ function Login() {
               <Input />
             </div>
             <Button>Sign in</Button>
-            <div className="flex items-center justify-between gap-3">
-              <div className="bg-on-background h-0.5 w-full"></div>
-              <span className="text-xs">OR</span>
-              <div className="bg-on-background h-0.5 w-full"></div>
-            </div>
+            <span className="text-xs">OR</span>
             <Button variant={"outline"}>
               Sign in with Pinterest <PiPinterestLogoThin />
             </Button>
