@@ -1,48 +1,31 @@
-import React, { useEffect, useState, RefObject, useRef } from "react";
-import { frame, motion, useSpring } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-export default function MouseLight() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { x, y } = useFollowPointer(ref);
-
-  return (
-    <motion.div
-      className="via-accent bg-radial from-white to-transparent blur-xl"
-      ref={ref}
-      style={{ ...ball, x, y }}
-    />
-  );
-}
-
-const spring = { damping: 30, stiffness: 100, restDelta: 0.001 };
-
-export function useFollowPointer(ref: RefObject<HTMLDivElement | null>) {
-  const x = useSpring(0, spring);
-  const y = useSpring(0, spring);
+const MouseLight = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  //setposition x i y , 2 state
 
   useEffect(() => {
-    if (!ref.current) return;
-
-    const handlePointerMove = ({ clientX, clientY }: MouseEvent) => {
-      const element = ref.current!;
-
-      frame.read(() => {
-        x.set(clientX - element.offsetLeft - element.offsetWidth / 2);
-        y.set(clientY - element.offsetTop - element.offsetHeight / 2);
+    const handleMouseMove = (event: MouseEvent) => {
+      const scrollX = window.scrollX || 0;
+      const scrollY = window.scrollY || 0;
+      setPosition({
+        x: event.clientX + scrollX,
+        y: event.clientY + scrollY,
       });
     };
 
-    window.addEventListener("pointermove", handlePointerMove);
-
-    return () => window.removeEventListener("pointermove", handlePointerMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  return { x, y };
-}
-
-const ball = {
-  width: 200,
-  height: 200,
-  borderRadius: "50%",
-  position: "absolute",
+  return (
+    <motion.div
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "tween" }}
+      className="absolute -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_10px_#ffffff,0_0_5px_,0_0_100px_var(--accent),0_0_120px_var(--accent)] lg:block"
+    />
+  );
 };
+
+export default MouseLight;
