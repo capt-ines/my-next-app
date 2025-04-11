@@ -58,7 +58,7 @@ export default function Particle({
         boxShadow: `0 0 20px ${color || getRandomRGBColor()}`,
         width: sizeConst,
       }}
-      className={`absolute -z-50 aspect-square rounded-full opacity-80 mix-blend-color-dodge`}
+      className="absolute aspect-square rounded-full mix-blend-color-dodge"
     />
   );
 }
