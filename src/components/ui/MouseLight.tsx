@@ -1,31 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState, RefObject, useRef } from "react";
+import { frame, motion, useSpring } from "framer-motion";
 
-const MouseLight = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  //setposition x i y , 2 state
+// const [position, setPosition] = useState({ x: 0, y: 0 });
+// //setposition x i y , 2 state
+
+// useEffect(() => {
+//   const handleMouseMove = (event: MouseEvent) => {
+//     const scrollX = window.scrollX || 0;
+//     const scrollY = window.scrollY || 0;
+//     setPosition({
+//       x: event.clientX + scrollX,
+//       y: event.clientY + scrollY,
+//     });
+//   };
+
+//   window.addEventListener("mousemove", handleMouseMove);
+//   return () => window.removeEventListener("mousemove", handleMouseMove);
+// }, []);
+
+export default function MouseLight() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { x, y } = useFollowPointer(ref);
+
+  return <motion.div ref={ref} style={{ ...ball, x, y }} />;
+}
+
+const spring = { damping: 30, stiffness: 100, restDelta: 0.001 };
+
+export function useFollowPointer(ref: RefObject<HTMLDivElement | null>) {
+  const x = useSpring(0, spring);
+  const y = useSpring(0, spring);
 
   useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      const scrollX = window.scrollX || 0;
-      const scrollY = window.scrollY || 0;
-      setPosition({
-        x: event.clientX + scrollX,
-        y: event.clientY + scrollY,
+    if (!ref.current) return;
+
+    const handlePointerMove = ({ clientX, clientY }: MouseEvent) => {
+      const element = ref.current!;
+
+      frame.read(() => {
+        x.set(clientX - element.offsetLeft - element.offsetWidth / 2);
+        y.set(clientY - element.offsetTop - element.offsetHeight / 2);
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("pointermove", handlePointerMove);
+
+    return () => window.removeEventListener("pointermove", handlePointerMove);
   }, []);
 
-  return (
-    <motion.div
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "tween" }}
-      className="via-accent pointer-events-none absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial from-white from-5% via-40% to-transparent to-70% mix-blend-hard-light blur-2xl lg:inline"
-    />
-  );
-};
+  return { x, y };
+}
 
-export default MouseLight;
+const ball = {
+  width: 100,
+  height: 100,
+  backgroundColor: "#ffffff",
+  borderRadius: "50%",
+  position: "absolute",
+};
