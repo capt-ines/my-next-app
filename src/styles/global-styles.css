@@ -34,7 +34,8 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-
+  --color-index-background: var(--index-background);
+  --color-index-background2: var(--index-background2);
   --animate-wiggle: wiggle 1s ease-in-out 2 forwards;
   @keyframes wiggle {
     0%,
@@ -69,7 +70,7 @@
     @apply font-sans text-lg font-normal;
   }
   .neon {
-    @apply shadow-[0_0_10px_#ffffff7f,0_0_5px_,0_0_15px_var(--accent),0_0_30px_var(--accent)] hover:shadow-[0_0_20px_#ffffff7f,0_0_5px_,0_0_15px_var(--accent),0_0_30px_var(--accent)];
+    @apply shadow-[0_0_10px_#ffffff7f,0_0_15px_var(--accent),0_0_30px_var(--accent)] hover:shadow-[0_0_20px_#ffffff7f,0_0_15px_var(--accent),0_0_30px_var(--accent)];
   }
 }
 
@@ -79,7 +80,13 @@
 
 @layer components {
   .link {
-    @apply text-accent cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;
+    @apply text-secondary cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;
+  }
+  .mousecolor {
+    @apply bg-accent absolute -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_5px_#ffffff,0_0_5px_,0_0_150px_var(--accent),0_0_120px_var(--accent)] lg:block;
+  }
+  .mouselight {
+    @apply absolute -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 shadow-[0_0_5px_#ffffff,0_0_5px_,0_0_150px_var(--accent),0_0_120px_var(--accent)] lg:block;
   }
   h1 {
     @apply mb-1 font-serif text-3xl font-semibold;
@@ -105,22 +112,25 @@
     --font-sans: "Nunito";
     --radius: 0.625rem;
 
-    --global-background: theme(colors.indigo.600);
+    --global-background: theme(colors.zinc.200);
+    --index-background: theme(colors.zinc.500);
+    --index-background2: theme(colors.white);
 
-    --background: theme(colors.zinc.600);
-    --foreground: theme(colors.white);
+    --background: theme(colors.white);
+    --foreground: theme(colors.black);
+    /* TODO: foreground white only on index layout */
 
     --primary: theme(colors.white);
     --primary-foreground: theme(colors.black);
 
     --secondary: theme(colors.indigo.500);
-    --secondary-foreground: theme(colors.white);
+    --secondary-foreground: oklch(0.985 0 0);
+
+    --accent: theme(colors.indigo.400);
+    --accent-foreground: oklch(0.985 0 0);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
-
-    --accent: theme(colors.indigo.500);
-    --accent-foreground: theme(colors.white);
 
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
@@ -129,8 +139,8 @@
 
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: theme(colors.indigo.400);
+    --input: theme(colors.white);
+    --ring: theme(colors.indigo.500);
     --chart-1: oklch(0.646 0.222 41.116);
     --chart-2: oklch(0.6 0.118 184.704);
     --chart-3: oklch(0.398 0.07 227.392);
@@ -148,14 +158,17 @@
 
   .dark {
     --global-background: theme(colors.slate.900);
+    --index-background: theme(colors.slate.800);
+    --index-background2: theme(colors.slate.900);
 
     --background: theme(colors.zinc.800);
     --foreground: theme(colors.white);
 
     --primary: theme(colors.zinc.900);
     --primary-foreground: theme(colors.white);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
+
+    --secondary: theme(colors.slate.400);
+    --secondary-foreground: theme(colors.white);
 
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
@@ -165,13 +178,15 @@
 
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
-    --accent: theme(colors.pink.600);
-    --accent-foreground: oklch(0.985 0 0);
+
+    --accent: theme(colors.indigo.400);
+    --accent-foreground: theme(colors.white);
+
     --destructive: oklch(0.704 0.191 22.216);
     --border: oklch(1 0 0 / 10%);
 
     --input: oklch(1 0 0 / 15%);
-    --ring: theme(colors.pink.900);
+    --ring: theme(colors.slate.700);
 
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);

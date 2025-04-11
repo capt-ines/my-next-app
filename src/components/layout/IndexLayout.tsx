@@ -9,7 +9,7 @@ interface LayoutProps {
 
 function IndexLayout({ children }: LayoutProps) {
   return (
-    <div className="from-accent/20 overflow-hidden bg-linear-to-b to-transparent">
+    <div className="from-index-background to-index-background2 overflow-hidden bg-linear-to-b">
       <div className="absolute h-screen w-screen blur-2xl">
         <MouseLight />
       </div>

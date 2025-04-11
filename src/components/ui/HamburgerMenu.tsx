@@ -47,7 +47,7 @@ const HamburgerMenu = () => {
             className={clsx(
               "z-[51] h-1 w-1 transform rounded-full transition duration-600",
               isOpen
-                ? "bg-accent scale-[90000%]"
+                ? "bg-background scale-[90000%]"
                 : "bg-foreground group-hover:scale-120",
             )}
           ></div>

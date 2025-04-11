@@ -12,12 +12,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      {/* <style jsx global>{`
+      <style jsx global>{`
         html {
-          color: var(--foreground);
-          background-color: black;
+          background-color: var(--color-global-background);
         }
-      `}</style> */}
+      `}</style>
       {getLayout(<Component {...pageProps} />)}
       <Button className="fixed bottom-0 left-0" onClick={toggleTheme} />
     </>
