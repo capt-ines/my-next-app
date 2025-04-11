@@ -18,11 +18,13 @@ function Layout({ children }: LayoutProps) {
         <Particle center={{ x: 200, y: 100 }} />
         <Particle />
       </div>
-      <div className="bg-global-background/30 min-h-screen min-w-screen overflow-hidden">
-        <Header />
-        <main className="mt-4 mb-20 min-h-[calc(100vh-160px)] md:mt-6">
-          {children}
-        </main>
+      <div className="overflow-hidden">
+        <div className="relative min-h-screen">
+          <div className="absolute right-0 left-0">
+            <Header />
+          </div>
+          <main className="mx-6 mb-20 py-18">{children}</main>
+        </div>
         <Footer />
       </div>
     </>

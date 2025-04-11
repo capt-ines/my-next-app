@@ -14,7 +14,7 @@ const Header = () => {
   const color = isIndex ? "white" : "foreground";
 
   return (
-    <header className="mx-content flex items-center justify-between pt-4">
+    <header className="mx-content flex items-center justify-between py-4">
       <Link href="/">
         <div className="my-2 flex items-center gap-0.5">
           <h1 translate="no" className={`text-${color} text-logo`}>

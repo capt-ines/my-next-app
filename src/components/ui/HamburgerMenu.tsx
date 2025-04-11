@@ -19,7 +19,7 @@ const Dot = ({ backgroundColor, isOpen, isBig = false }: DotTypes) => (
     }
     transition={{ duration: 0.3 }}
     initial={{ backgroundColor: backgroundColor }}
-    className={`z-50 h-1 w-1 transform rounded-full transition duration-800 ease-in-out ${
+    className={`h-1 w-1 transform rounded-full transition duration-800 ease-in-out ${
       isBig
         ? isOpen
           ? `scale-[50000%]`
@@ -44,7 +44,7 @@ const HamburgerMenu = () => {
   };
 
   return (
-    <nav>
+    <nav className="z-50">
       <button
         onClick={toggleMenu}
         className="group -my-4 -mr-6 flex cursor-pointer flex-col items-center gap-1 p-6"
@@ -75,7 +75,6 @@ const HamburgerMenu = () => {
           className={`flex flex-col gap-5 text-right text-3xl transition duration-600 ease-in-out min-[580px]:right-30 min-[580px]:gap-6 ${isOpen ? `opacity-100` : `translate-x-60 -translate-y-60 opacity-0`}`}
         >
           <li className="transition duration-400 hover:scale-110">
-            {" "}
             <Link onClick={toggleMenu} href="/login">
               Sign in
             </Link>
