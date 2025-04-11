@@ -1,23 +1,7 @@
 import type { AppProps } from "next/app";
 import Layout from "../components/layout/Layout";
-import { Zeyada, Nunito, Italiana } from "next/font/google";
 import "../styles/global-styles.css";
 import { Button } from "@/components/ui/button";
-
-const zeyada = Zeyada({
-  subsets: ["latin"],
-  weight: "400",
-});
-
-const nunito = Nunito({
-  subsets: ["latin"],
-  weight: ["200", "300", "400"],
-});
-
-const italiana = Italiana({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 function toggleTheme() {
   document.documentElement.classList.toggle("dark");

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Italiana&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&family=Zeyada&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Buda:wght@300&family=Italiana&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&family=Zeyada&display=swap");
 @import "tailwindcss";
 
 @theme inline {
@@ -64,11 +64,7 @@
   .mx-content {
     @apply mx-6 md:mx-8;
   }
-  .zeyada-regular {
-    font-family: "Zeyada", cursive;
-    font-weight: 400;
-    font-style: normal;
-  }
+
   .text-logo {
     @apply font-sans text-lg font-normal;
   }
@@ -77,15 +73,19 @@
   }
 }
 
+@theme {
+  --font-cursive: "Zeyada", cursive;
+}
+
 @layer components {
   .link {
     @apply text-accent cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;
   }
   h1 {
-    @apply mb-1 font-serif text-xl sm:text-3xl;
+    @apply mb-1 font-serif text-3xl font-semibold;
   }
   h2 {
-    @apply mb-1 font-serif text-xl sm:text-2xl;
+    @apply mb-1 font-serif text-2xl sm:text-2xl;
   }
   h3 {
     @apply text-lg sm:text-xl;
@@ -98,12 +98,11 @@
 
     --font-weight-light: 100;
     --font-weight-normal: 200;
-    --font-weight-semibold: 300;
-    --font-weight-bold: 400;
+    --font-weight-semibold: 400;
+    --font-weight-bold: 500;
 
     --font-serif: "Italiana";
     --font-sans: "Nunito";
-
     --radius: 0.625rem;
 
     --global-background: theme(colors.indigo.600);

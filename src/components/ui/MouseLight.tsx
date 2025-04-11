@@ -23,7 +23,7 @@ const MouseLight = () => {
     <motion.div
       animate={{ x: position.x, y: position.y }}
       transition={{ type: "tween" }}
-      className="via-accent/50 pointer-events-none absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial from-white from-5% via-40% to-transparent to-70% blur-2xl lg:inline"
+      className="via-accent pointer-events-none absolute hidden h-96 w-96 -translate-x-1/2 -translate-y-1/2 bg-radial from-white from-5% via-40% to-transparent to-70% mix-blend-hard-light blur-2xl lg:inline"
     />
   );
 };

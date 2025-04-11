@@ -40,7 +40,7 @@ const HeroSection = () => {
               Illuminate your soul’s path.
             </h1>
             <p
-              className={`text-center text-sm transition duration-1000 sm:text-lg ${isClicked ? "text-transparent" : "text-accent"}`}
+              className={`min-[400px]:text-md text-center text-sm transition duration-1000 min-[480px]:text-lg ${isClicked ? "text-transparent" : "text-accent"}`}
             >
               A powerful set of tools to navigate it with clarity and craft with
               purpose.
@@ -50,7 +50,7 @@ const HeroSection = () => {
           <Button
             onClick={() => handlePingAndRedirect("/register")}
             variant={"secondary"}
-            className={`absolute translate-y-16 cursor-pointer text-xs transition sm:mt-8 sm:text-sm ${isClicked ? "bg-transparent text-transparent duration-1000" : "duration-500 hover:scale-105"}`}
+            className={`absolute translate-y-16 cursor-pointer text-xs transition min-[480px]:mt-8 sm:text-sm ${isClicked ? "bg-transparent text-transparent duration-1000" : "duration-500 hover:scale-105"}`}
           >
             Get started
           </Button>
