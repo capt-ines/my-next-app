@@ -6,10 +6,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import Container from "@/components/ui/Container";
 
 function About() {
   return (
-    <div className="mx-content">
+    <Container className="mx-content">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -30,7 +31,7 @@ function About() {
           dolorum! Rerum?
         </p>
       </section>
-    </div>
+    </Container>
   );
 }
 
