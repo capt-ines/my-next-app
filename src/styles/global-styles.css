@@ -37,6 +37,7 @@
   --color-index-background: var(--index-background);
   --color-index-background2: var(--index-background2);
   --animate-wiggle: wiggle 1s ease-in-out 2 forwards;
+  --animate-shake: shake 0.2s ease-in-out 1;
   @keyframes wiggle {
     0%,
     100% {
@@ -44,6 +45,22 @@
     }
     50% {
       transform: rotate(3deg);
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(0.5%);
+      filter: blur(1px);
+    }
+    25% {
+      transform: translateX(-0.5%);
+    }
+    50% {
+      transform: translateX(0.5%);
+    }
+    100% {
+      transform: translateX(-0.5%);
     }
   }
 
@@ -136,7 +153,7 @@
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
 
-    --destructive: oklch(0.577 0.245 27.325);
+    --destructive: theme(--color-red-700);
     --border: oklch(0.922 0 0);
     --input: theme(colors.white);
     --ring: theme(colors.indigo.500);
@@ -181,7 +198,7 @@
     --accent: theme(colors.indigo.400);
     --accent-foreground: theme(colors.white);
 
-    --destructive: oklch(0.704 0.191 22.216);
+    --destructive: theme(--color-rose-500);
     --border: oklch(1 0 0 / 10%);
 
     --input: oklch(1 0 0 / 15%);
