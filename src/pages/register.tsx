@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Container from "@/components/ui/Container";
@@ -7,64 +7,71 @@ import Link from "next/link";
 import { PiFacebookLogoThin } from "react-icons/pi";
 import { PiPinterestLogoThin } from "react-icons/pi";
 import { PiGoogleLogoThin } from "react-icons/pi";
-import { Formik, useFormikContext } from "formik";
+import { Formik } from "formik";
 import { registerSchema } from "@/schema/registerSchema";
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/utils/supabase/component";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import { useTriggerAnimation } from "@/hooks/useTriggerAnimation";
 
 function Register() {
   const router = useRouter();
+  const supabase = createClient();
+
+  const signUp = async (values) => {
+    const { email, password, username } = values;
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      console.error(error);
+      return;
+    }
+    {
+      console.log("Sign-up response:", data);
+      const user = data?.user;
+      if (user) {
+        const res = await fetch("/api/createAccount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: user.id,
+            username,
+          }),
+        });
+        if (!res.ok) {
+          const { error: apiError } = await res.json();
+          console.log({ username: apiError || "Failed to create account" });
+          return;
+        }
+        router.push("/dashboard");
+      }
+    }
+  };
+
   return (
     <>
       <Formik
         initialValues={{ username: "", email: "", password: "" }}
         validationSchema={registerSchema}
-        onSubmit={async (values, { setSubmitting, setFieldError }) => {
-          const { data, error } = await supabase.auth.signUp({
-            email: values.email,
-            password: values.password,
-          });
-          if (error) {
-            setFieldError("email", error.message);
-            console.log(error);
-            console.log(values);
-          } else {
-            console.log(values);
-            // const user = data.user;
-            // if (user) {
-            //   await supabase.from("users").insert([
-            //     {
-            //       id: user.id,
-            //       username: values.username,
-            //     },
-            //   ]);
-            // }
-            router.push("/dashboard");
-          }
-          setSubmitting(false);
+        onSubmit={(values) => {
+          signUp(values);
         }}
       >
-        {(props) => <Form props={props} />}
+        {(props) => <Form {...props} />}
       </Formik>
     </>
   );
 }
 
-const Form = ({ props }) => {
-  const [submissionFailed, setSubmissionFailed] = useState(false);
-  const { submitCount, handleSubmit } = useFormikContext(); // Destructure submitCount from Formik context
-
-  // Check if submitCount is available
-  useEffect(() => {
-    setSubmissionFailed(true);
-    const timer = setTimeout(() => {
-      setSubmissionFailed(false);
-    }, 200);
-    //TODO: add rate limit to form subimission
-
-    return () => clearTimeout(timer);
-  }, [submitCount]);
+const Form = (props) => {
+  const buttonRef = useRef<HTMLButtonElement>(null!);
+  useTriggerAnimation(
+    buttonRef,
+    "animate-shake",
+    props.submitCount,
+    Object.keys(props.errors).length > 0,
+  );
 
   return (
     <motion.div
@@ -81,12 +88,20 @@ const Form = ({ props }) => {
           <p className="mb-1 text-xl font-semibold">Create your account</p>
           <div className="text-left">
             <span className="mb-1">Username</span>
-            {/* <Input
-          onBlur={props.handleBlur}
-          onChange={props.handleChange}
-          value={props.values.username}
-          name="username"
-        /> */}
+            <Input
+              onBlur={props.handleBlur}
+              onChange={props.handleChange}
+              value={props.values.username}
+              name="username"
+              className={clsx(
+                props.touched.email && props.errors.email
+                  ? `border-destructive`
+                  : null,
+              )}
+            />
+            {props.touched.username && props.errors.username ? (
+              <span className="text-destructive">{props.errors.username}</span>
+            ) : null}
           </div>
           <div className="text-left">
             <span className="mb-1">Email</span>
@@ -125,25 +140,18 @@ const Form = ({ props }) => {
             ) : null}
           </div>
 
-          <Button
-            className={clsx(
-              Object.keys(props.errors).length > 0 &&
-                submissionFailed &&
-                `animate-shake`,
-            )}
-            type="submit"
-          >
+          <Button ref={buttonRef} type="submit">
             Create account
           </Button>
 
           <span className="text-xs">OR</span>
-          <Button variant={"outline"}>
+          <Button variant={"outline"} type="button">
             Create account with Pinterest <PiPinterestLogoThin />
           </Button>
-          <Button variant={"outline"}>
+          <Button variant={"outline"} type="button">
             Create account with Google <PiGoogleLogoThin />
           </Button>
-          <Button variant={"outline"}>
+          <Button variant={"outline"} type="button">
             Create account with Facebook <PiFacebookLogoThin />
           </Button>
           <div className="flex items-center justify-center gap-2">
