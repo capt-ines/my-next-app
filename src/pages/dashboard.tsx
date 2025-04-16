@@ -1,13 +1,14 @@
 import React from "react";
-import type { User } from "@supabase/supabase-js";
 import type { GetServerSidePropsContext } from "next";
 import { createClient } from "@/utils/supabase/server-props";
 import { createClient as createComponentClient } from "@/utils/supabase/component";
 import { useRouter } from "next/router";
+import { useUser } from "@/contexts/userContext";
 
-const Dashboard = ({ user }: { user: User }) => {
-  const metadata = user?.user_metadata;
+const Dashboard = () => {
+  const { username } = useUser();
   const router = useRouter();
+
   const signOut = async () => {
     const supabase = createComponentClient();
     const { error } = await supabase.auth.signOut();
@@ -17,9 +18,10 @@ const Dashboard = ({ user }: { user: User }) => {
     }
     router.push("/");
   };
+
   return (
     <>
-      <h1>Hello, {metadata.username || "user"}!</h1>
+      <h1>Hello, {username}!</h1>
       <button onClick={signOut}>sign out</button>
     </>
   );

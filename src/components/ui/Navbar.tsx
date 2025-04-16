@@ -2,24 +2,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/component";
+import { useUser } from "@/contexts/userContext";
 
 const Navbar = () => {
   const pathname = usePathname();
   const isIndex = pathname === "/";
   const color = isIndex ? "white" : "foreground";
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    getUser();
-  }, []);
+  const { user } = useUser();
+  console.log(user);
 
   return (
     <nav>
