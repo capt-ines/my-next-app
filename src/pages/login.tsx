@@ -7,8 +7,25 @@ import Link from "next/link";
 import { PiFacebookLogoThin } from "react-icons/pi";
 import { PiPinterestLogoThin } from "react-icons/pi";
 import { PiGoogleLogoThin } from "react-icons/pi";
+import { createClient } from "@/utils/supabase/component";
+import { useRouter } from "next/router";
 
 function Login() {
+  const supabase = createClient();
+  const router = useRouter();
+
+  const logIn = async (values) => {
+    const { email, password } = values;
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) {
+      console.error(error);
+    }
+    router.push("/dashboard");
+  };
+
   return (
     <>
       <motion.div

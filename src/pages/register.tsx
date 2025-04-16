@@ -20,32 +20,17 @@ function Register() {
 
   const signUp = async (values) => {
     const { email, password, username } = values;
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { username } },
+    });
     if (error) {
       console.error(error);
       return;
     }
     {
-      console.log("Sign-up response:", data);
-      const user = data?.user;
-      if (user) {
-        const res = await fetch("/api/createAccount", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: user.id,
-            username,
-          }),
-        });
-        if (!res.ok) {
-          const { error: apiError } = await res.json();
-          console.log({ username: apiError || "Failed to create account" });
-          return;
-        }
-        router.push("/dashboard");
-      }
+      router.push("/dashboard");
     }
   };
 
