@@ -26,19 +26,14 @@ const Provider: React.FC<ProviderProps> = ({
   initialUser = null,
 }) => {
   const [user, setUser] = useState<User | null>(initialUser);
-  const [username, setUsername] = useState<string | null>(
-    initialUser?.user_metadata?.username ?? null,
-  );
 
   useEffect(() => {
     const fetchUser = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (data?.user) {
         setUser(data.user);
-        setUsername(data.user.user_metadata?.username ?? null);
       } else {
         setUser(null);
-        setUsername(null);
       }
     };
 
@@ -47,7 +42,6 @@ const Provider: React.FC<ProviderProps> = ({
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (_event, session: Session | null) => {
         setUser(session?.user ?? null);
-        setUsername(session?.user?.user_metadata?.username ?? null);
       },
     );
 
@@ -57,7 +51,9 @@ const Provider: React.FC<ProviderProps> = ({
   }, [initialUser]);
 
   return (
-    <Context.Provider value={{ user, username }}>{children}</Context.Provider>
+    <Context.Provider value={{ user, username: user?.user_metadata?.username }}>
+      {children}
+    </Context.Provider>
   );
 };
 

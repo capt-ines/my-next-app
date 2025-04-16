@@ -34,10 +34,10 @@ export default function Particle({
   };
 
   const directionConst = direction === "clockwise" ? 1 : -1 || getRandomOne();
-  const speedConst = speed || getRandomFloat(0.02, 0.07);
+  const speedConst = speed ?? getRandomFloat(0.02, 0.07);
   const constX = center ? center.x : getCenterConst().x;
   const constY = center ? center.y : getCenterConst().y;
-  const sizeConst = size || getRandomInt(400, 800);
+  const sizeConst = size ?? getRandomInt(400, 800);
 
   useAnimationFrame((t) => {
     const angleInRadians =

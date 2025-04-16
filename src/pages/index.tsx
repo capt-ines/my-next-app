@@ -11,6 +11,26 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import { GetServerSideProps } from "next";
+import { createClient } from "@/utils/supabase/server-props";
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const supabase = createClient(context);
+  const { data } = await supabase.auth.getUser();
+
+  if (data?.user) {
+    return {
+      redirect: {
+        destination: "/explore",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 function Home() {
   return (

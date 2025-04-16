@@ -3,38 +3,41 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/component";
 import { useUser } from "@/contexts/userContext";
+import {
+  publicNavLinksData,
+  dashboardNavLinksData,
+} from "@/constants/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
   const isIndex = pathname === "/";
   const color = isIndex ? "white" : "foreground";
-  const { user } = useUser();
-  console.log(user);
+  const { user, username } = useUser();
+
+  const navLinks = pathname.startsWith("/dashboard")
+    ? dashboardNavLinksData
+    : publicNavLinksData;
 
   return (
     <nav>
       <ul className={`flex gap-6 text-${color}`}>
-        <li className="transition duration-400 hover:scale-110">
-          {user ? (
-            <Link className="text-accent" href="/dashboard">
-              {user?.user_metadata.username}
-            </Link>
-          ) : (
+        {user ? (
+          <li className="text-accent transition duration-400 hover:scale-110">
+            <Link href="/dashboard">{username}</Link>
+          </li>
+        ) : (
+          <li className="transition duration-400 hover:scale-110">
             <Link href="/login">Sign in</Link>
-          )}
-        </li>
-
-        <li className="transition duration-400 hover:scale-110">
-          <Link href="/about"> Our mission </Link>
-        </li>
-
-        <li className="transition duration-400 hover:scale-110">
-          Find inspiration
-        </li>
-
-        <li translate="no" className="transition duration-400 hover:scale-110">
-          Soulscape blog
-        </li>
+          </li>
+        )}
+        {navLinks.map((link) => (
+          <li
+            key={link.href}
+            className="transition duration-400 hover:scale-110"
+          >
+            <Link href={link.href}>{link.label}</Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );

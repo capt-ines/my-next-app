@@ -35,17 +35,15 @@ function Register() {
   };
 
   return (
-    <>
-      <Formik
-        initialValues={{ username: "", email: "", password: "" }}
-        validationSchema={registerSchema}
-        onSubmit={(values) => {
-          signUp(values);
-        }}
-      >
-        {(props) => <Form {...props} />}
-      </Formik>
-    </>
+    <Formik
+      initialValues={{ username: "", email: "", password: "" }}
+      validationSchema={registerSchema}
+      onSubmit={(values) => {
+        signUp(values);
+      }}
+    >
+      {(props) => <Form {...props} />}
+    </Formik>
   );
 }
 

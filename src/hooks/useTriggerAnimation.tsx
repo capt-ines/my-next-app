@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export const useTriggerAnimation = <T extends HTMLElement>(
   ref: React.RefObject<T>,
   animationClass: string,
-  trigger: any,
+  trigger: string | number,
   condition: boolean,
 ) => {
   useEffect(() => {

@@ -5,6 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
+import {
+  publicNavLinksData,
+  dashboardNavLinksData,
+} from "@/constants/navigation";
+import { useUser } from "@/contexts/userContext";
 
 interface DotTypes {
   isOpen: boolean;
@@ -34,6 +39,7 @@ const Dot = ({ backgroundColor, isOpen, isBig = false }: DotTypes) => (
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { user, username } = useUser();
   const isIndex = pathname === "/";
   const backgroundColor = isIndex
     ? "var(--color-white)"
@@ -42,6 +48,29 @@ const HamburgerMenu = () => {
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
+
+  const navLinks =
+    pathname === "/dashboard"
+      ? dashboardNavLinksData.map((link) => (
+          <li
+            key={link.href}
+            className="transition duration-400 hover:scale-110"
+          >
+            <Link onClick={toggleMenu} href={link.href}>
+              {link.label}
+            </Link>
+          </li>
+        ))
+      : publicNavLinksData.map((link) => (
+          <li
+            key={link.href}
+            className="transition duration-400 hover:scale-110"
+          >
+            <Link onClick={toggleMenu} href={link.href}>
+              {link.label}
+            </Link>
+          </li>
+        ));
 
   return (
     <nav className="z-50">
@@ -74,25 +103,20 @@ const HamburgerMenu = () => {
         <ul
           className={`flex flex-col gap-5 text-right text-3xl transition duration-600 ease-in-out min-[580px]:right-30 min-[580px]:gap-6 ${isOpen ? `opacity-100` : `translate-x-60 -translate-y-60 opacity-0`}`}
         >
-          <li className="transition duration-400 hover:scale-110">
-            <Link onClick={toggleMenu} href="/login">
-              Sign in
-            </Link>
-          </li>
-          <li className="transition duration-400 hover:scale-110">
-            <Link onClick={toggleMenu} href="/about">
-              Our mission
-            </Link>
-          </li>
-          <li className="transition duration-400 hover:scale-110">
-            Find inspiration
-          </li>
-          <li
-            translate="no"
-            className="transition duration-400 hover:scale-110"
-          >
-            Soulscape blog
-          </li>
+          {user ? (
+            <li className="text-accent transition duration-400 hover:scale-110">
+              <Link onClick={toggleMenu} href="/dashboard">
+                {username}
+              </Link>
+            </li>
+          ) : (
+            <li className="transition duration-400 hover:scale-110">
+              <Link onClick={toggleMenu} href="/login">
+                Sign in
+              </Link>
+            </li>
+          )}
+          {navLinks}
         </ul>
       </div>
     </nav>
