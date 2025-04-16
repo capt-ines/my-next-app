@@ -81,7 +81,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --quiet",
-    "*.{json,js,ts,jsx,tsx,html}": "prettier --write --ignore-unknown"
+    "*.{json,js,ts,jsx,tsx,html}": "prettier --plugin=prettier-plugin-tailwindcss --write --ignore-unknown"
   },
   "nextBundleAnalysis": {
     "budget": null,
