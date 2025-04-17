@@ -3,10 +3,12 @@ import MouseLight from "./MouseLight";
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import { useUser } from "@/contexts/userContext";
 
 const HeroSection = () => {
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
+  const { user } = useUser();
 
   const handlePingAndRedirect = (url: string) => {
     setIsClicked(true);
@@ -48,7 +50,9 @@ const HeroSection = () => {
           </div>
 
           <Button
-            onClick={() => handlePingAndRedirect("/register")}
+            onClick={() =>
+              handlePingAndRedirect(user ? "/explore" : "/register")
+            }
             variant={"secondary"}
             className={`bg-accent absolute translate-y-16 cursor-pointer text-xs transition min-[480px]:mt-8 sm:text-sm ${isClicked ? "bg-transparent text-transparent duration-1000" : "duration-500 hover:scale-105"}`}
           >

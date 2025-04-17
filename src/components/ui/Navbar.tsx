@@ -22,9 +22,12 @@ const Navbar = () => {
     <nav>
       <ul className={`flex gap-6 text-${color}`}>
         {user ? (
-          <li className="text-accent transition duration-400 hover:scale-110">
-            <Link href="/dashboard">{username}</Link>
-          </li>
+          <>
+            <li className="font-semibold transition duration-400 hover:scale-110">
+              <Link href="/dashboard">{username}</Link>
+            </li>
+            <span>|</span>
+          </>
         ) : (
           <li className="transition duration-400 hover:scale-110">
             <Link href="/login">Sign in</Link>

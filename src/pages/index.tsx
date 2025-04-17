@@ -11,32 +11,20 @@ import {
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
-import { GetServerSideProps } from "next";
-import { createClient } from "@/utils/supabase/server-props";
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const supabase = createClient(context);
-  const { data } = await supabase.auth.getUser();
-
-  if (data?.user) {
-    return {
-      redirect: {
-        destination: "/explore",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
+import { useUser } from "@/contexts/userContext";
+import { useThemeContext } from "@/contexts/themeContext";
 
 function Home() {
+  const { user } = useUser();
+  const { setTheme } = useThemeContext();
+  function toggleTheme() {
+    setTheme("sage");
+  }
   return (
     <div className="min-h-screen">
       <HeroSection />
       <Container style="backdrop-blur-xs">
+        <Button className="z-50" onClick={toggleTheme}></Button>
         <section className="flex flex-col gap-3 text-center lg:mx-12">
           <header className="my-4">
             <h2 className="text-3xl lg:text-4xl">
@@ -87,7 +75,7 @@ function Home() {
             </Container>
           </article>
           <Link
-            href="/register"
+            href={user ? "/explore" : "/register"}
             className={buttonVariants({
               variant: "outline",
               className: "neon mx-auto w-fit",

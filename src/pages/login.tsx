@@ -26,6 +26,7 @@ function Login() {
     });
     if (error) {
       console.error(error);
+      return;
     }
     router.push("/dashboard");
   };
@@ -123,7 +124,7 @@ const Form = (props) => {
             ) : null}
           </div>
 
-          <Button ref={buttonRef} type="submit">
+          <Button variant={"default"} ref={buttonRef} type="submit">
             Sign in
           </Button>
 
