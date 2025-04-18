@@ -3,6 +3,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-mask: var(--mask);
   --color-global-background: var(--global-background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -17,6 +18,7 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-glow: var(--glow);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-input: var(--input);
@@ -38,6 +40,46 @@
   --color-index-background2: var(--index-background2);
   --animate-wiggle: wiggle 1s ease-in-out 2 forwards;
   --animate-shake: shake 0.2s ease-in-out 1;
+  --animate-rainbowGlow: rainbowGlow 7s linear infinite;
+  @keyframes rainbowGlow {
+    0% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px magenta,
+        0 0 60px magenta;
+    }
+    20% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px cyan,
+        0 0 60px cyan;
+    }
+    40% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px aquamarine,
+        0 0 60px aquamarine;
+    }
+    60% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px springGreen,
+        0 0 60px springGreen;
+    }
+    80% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px yellow,
+        0 0 60px yellow;
+    }
+    100% {
+      box-shadow:
+        0 0 10px white,
+        0 0 5px magenta,
+        0 0 60px magenta;
+    }
+  }
+
   @keyframes wiggle {
     0%,
     100% {
@@ -89,6 +131,19 @@
   .neon {
     @apply shadow-[0_0_10px_#ffffff7f,0_0_15px_var(--accent),0_0_30px_var(--accent)] hover:shadow-[0_0_20px_#ffffff7f,0_0_15px_var(--accent),0_0_30px_var(--accent)];
   }
+  .glow {
+    box-shadow:
+      0 0 10px white,
+      0 0 5px var(--glow),
+      0 0 60px var(--glow);
+  }
+
+  .hover\:biggerglow:hover {
+    box-shadow:
+      0 0 10px white,
+      0 0 6px var(--glow),
+      0 0 100px var(--glow);
+  }
 }
 
 @theme {
@@ -103,7 +158,7 @@
     @apply bg-accent absolute -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_5px_#ffffff,0_0_5px_,0_0_150px_var(--accent),0_0_120px_var(--accent)] lg:block;
   }
   .mouselight {
-    @apply absolute -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 shadow-[0_0_5px_#ffffff,0_0_5px_,0_0_150px_var(--accent),0_0_120px_var(--accent)] lg:block;
+    @apply absolute mix-blend-plus-lighter -z-50 hidden aspect-square w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/70 shadow-[0_0_5px_#ffffff,0_0_5px_,0_0_150px_var(--accent),0_0_120px_var(--accent)] lg:block;
   }
   h1 {
     @apply mb-1 font-sans text-3xl;
@@ -130,6 +185,8 @@
     --font-sans: "Nunito";
     --radius: 0.625rem;
 
+    --mask: theme(colors.zinc.700);
+
     --global-background: theme(colors.zinc.200);
     --index-background: theme(colors.zinc.700);
     --index-background2: theme(colors.white);
@@ -145,6 +202,8 @@
 
     --accent: theme(colors.indigo.400);
     --accent-foreground: oklch(0.985 0 0);
+
+    --glow: theme(colors.indigo.300);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -196,8 +255,12 @@
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
 
+    --mask: theme(colors.zinc.800);
+
     --accent: theme(colors.indigo.400);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.indigo.300);
 
     --destructive: theme(--color-rose-500);
     --border: oklch(1 0 0 / 10%);
@@ -225,6 +288,8 @@
     --index-background: theme(colors.gray.700);
     --index-background2: theme(colors.gray.100);
 
+    --mask: theme(colors.gray.500);
+
     --background: theme(colors.gray.100);
     --foreground: theme(colors.gray.900);
 
@@ -236,6 +301,8 @@
 
     --accent: theme(colors.blue.300);
     --accent-foreground: oklch(0.985 0 0);
+
+    --glow: theme(colors.blue.300);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -264,17 +331,19 @@
     --sidebar-ring: oklch(0.708 0 0);
   }
   .pilgrim {
-    --global-background: theme(colors.slate.900);
+    --global-background: theme(colors.gray.500);
     --index-background: theme(colors.slate.800);
-    --index-background2: theme(colors.slate.900);
+    --index-background2: theme(colors.gray.200);
 
-    --background: theme(colors.zinc.800);
-    --foreground: theme(colors.white);
+    --global-mask: theme(colors.gray.500);
 
-    --primary: theme(colors.zinc.900);
+    --background: theme(colors.gray.200);
+    --foreground: theme(colors.black);
+
+    --primary: theme(colors.gray.900);
     --primary-foreground: theme(colors.white);
 
-    --secondary: theme(colors.teal.500);
+    --secondary: theme(colors.slate.700);
     --secondary-foreground: theme(colors.white);
 
     --card: oklch(0.205 0 0);
@@ -286,14 +355,16 @@
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
 
-    --accent: theme(colors.teal.500);
+    --accent: theme(colors.slate.400);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.slate.300);
 
     --destructive: theme(--color-rose-700);
     --border: oklch(1 0 0 / 10%);
 
     --input: oklch(1 0 0 / 15%);
-    --ring: theme(colors.teal.700);
+    --ring: theme(colors.slate.700);
 
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
@@ -317,6 +388,8 @@
     --background: theme(colors.zinc.100);
     --foreground: theme(colors.zinc.800);
 
+    --mask: theme(colors.zinc.400);
+
     --primary: theme(colors.white);
     --primary-foreground: theme(colors.zinc.800);
 
@@ -334,6 +407,8 @@
 
     --accent: theme(colors.orange.400);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.orange.300);
 
     --destructive: theme(--color-rose-400);
     --border: oklch(1 0 0 / 10%);
@@ -361,6 +436,8 @@
     --index-background: theme(colors.pink.950);
     --index-background2: theme(colors.neutral.900);
 
+    --mask: theme(colors.neutral.600);
+
     --background: theme(colors.neutral.700);
     --foreground: theme(colors.neutral.100);
 
@@ -381,6 +458,8 @@
 
     --accent: theme(colors.amber.600);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.amber.300);
 
     --destructive: theme(--color-red-600);
     --border: oklch(1 0 0 / 10%);
@@ -417,8 +496,12 @@
     --secondary: theme(colors.lime.400);
     --secondary-foreground: oklch(0.985 0 0);
 
+    --mask: theme(colors.neutral.900);
+
     --accent: theme(colors.lime.400);
     --accent-foreground: oklch(0.985 0 0);
+
+    --glow: theme(colors.lime.300);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -460,6 +543,8 @@
     --secondary: theme(colors.emerald.500);
     --secondary-foreground: theme(colors.neutral.100);
 
+    --mask: theme(colors.neutral.900);
+
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
 
@@ -472,6 +557,7 @@
     --accent: theme(colors.emerald.800);
     --accent-foreground: theme(colors.neutral.100);
 
+    --glow: theme(colors.emerald.400);
     --destructive: theme(--color-rose-500);
     --border: oklch(1 0 0 / 10%);
 
@@ -498,6 +584,8 @@
     --index-background: theme(colors.stone.700);
     --index-background2: theme(colors.stone.100);
 
+    --mask: theme(colors.stone.300);
+
     --background: theme(colors.stone.100);
     --foreground: theme(colors.stone.900);
 
@@ -509,6 +597,8 @@
 
     --accent: theme(colors.pink.400);
     --accent-foreground: oklch(0.985 0 0);
+
+    --glow: theme(colors.pink.300);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);
@@ -541,11 +631,15 @@
     --index-background: theme(colors.pink.950);
     --index-background2: theme(colors.zinc.950);
 
+    --mask: theme(colors.zinc.400);
+
     --background: theme(colors.zinc.600);
     --foreground: theme(colors.white);
 
     --primary: theme(colors.zinc.900);
     --primary-foreground: theme(colors.white);
+
+    --mask: theme(colors.zinc.900);
 
     --secondary: theme(colors.pink.500);
     --secondary-foreground: theme(colors.white);
@@ -561,6 +655,8 @@
 
     --accent: theme(colors.pink.800);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.fuchsia.400);
 
     --destructive: theme(--color-rose-500);
     --border: oklch(1 0 0 / 10%);
@@ -584,9 +680,11 @@
   }
 
   .magician {
-    --global-background: theme(colors.gray.900);
+    --global-background: theme(colors.gray.700);
     --index-background: theme(colors.indigo.950);
     --index-background2: theme(colors.gray.900);
+
+    --mask: theme(colors.gray.200);
 
     --background: theme(colors.gray.800);
     --foreground: theme(colors.white);
@@ -608,6 +706,8 @@
 
     --accent: theme(colors.red.800);
     --accent-foreground: theme(colors.white);
+
+    --glow: theme(colors.rose.400);
 
     --destructive: theme(--color-red-500);
     --border: oklch(1 0 0 / 10%);
@@ -634,6 +734,8 @@
     --index-background: theme(colors.red.700);
     --index-background2: theme(colors.gray.500);
 
+    --global-background: theme(colors.gray.500);
+
     --background: theme(colors.gray.900);
     --foreground: theme(colors.gray.100);
 
@@ -645,6 +747,8 @@
 
     --accent: theme(colors.red.300);
     --accent-foreground: oklch(0.985 0 0);
+
+    --glow: theme(colors.red.300);
 
     --muted: oklch(0.97 0 0);
     --muted-foreground: oklch(0.556 0 0);

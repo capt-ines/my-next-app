@@ -45,7 +45,6 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     if (theme !== stored) {
       localStorage.setItem("theme", theme);
     }
-    console.log(theme);
   }, [theme]);
 
   return (

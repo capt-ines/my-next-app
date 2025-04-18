@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { GetServerSidePropsContext } from "next";
 import { createClient } from "@/utils/supabase/server-props";
 import { createClient as createComponentClient } from "@/utils/supabase/component";
@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useUser } from "@/contexts/userContext";
 import Container from "@/components/ui/Container";
 import { useThemeContext } from "@/contexts/themeContext";
+import clsx from "clsx";
 import {
   Carousel,
   CarouselApi,
@@ -14,11 +15,38 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { themesData } from "@/constants/themes";
+import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
   const { username } = useUser();
   const router = useRouter();
   const { theme, setTheme } = useThemeContext();
+  const themes = themesData.map((t) => t.key);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentLabel = themesData.find((t) => t.key === theme)?.label;
+
+  useEffect(() => {
+    const index = themesData.findIndex((t) => t.key === theme);
+    if (index !== -1) {
+      setCurrentIndex(index);
+    }
+  }, [theme]);
+
+  const nextTheme = () => {
+    setCurrentIndex((prev) => {
+      const newIndex = (prev + 1) % themes.length;
+      setTheme(themes[newIndex]);
+      return newIndex;
+    });
+  };
+  const prevTheme = () => {
+    setCurrentIndex((prev) => {
+      const newIndex = (prev - 1 + themes.length) % themes.length;
+      setTheme(themes[newIndex]);
+      return newIndex;
+    });
+  };
 
   const signOut = async () => {
     const supabase = createComponentClient();
@@ -30,52 +58,42 @@ const Dashboard = () => {
     router.push("/");
   };
 
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
-
   return (
     <>
       {/* <h1>Hello, {username}!</h1>
       <button onClick={signOut}>sign out</button> */}
 
-      <section>
-        <Container style="flex justify-center text-center flex-col w-fit mx-auto">
+      <section className="mx-auto flex h-screen flex-col items-center justify-center gap-10 text-center">
+        <div className="">
           <h1>Choose your aura.</h1>
-          <span>You can change it later in your profile settings.</span>
-          <Carousel
-            setApi={setApi}
-            opts={{
-              loop: true,
-            }}
-          >
-            <CarouselContent className="">
-              <CarouselItem className="">
-                {/* <div
-                  className={` flex aspect-square w-52 hover:scale-105 max-w-md min-w-3xs flex-col items-center justify-center rounded-full bg-white px-5 shadow-[0_0_30px_#ffffff,0_0_20px_var(--accent),0_0_100px_var(--accent)] transition duration-1000 ease-out hover:shadow-[0_0_40px_#ffffff,0_0_60px_var(--accent),0_0_300px_var(--accent)] sm:px-10 }`}
-                ></div> */}
-                <h2 className="text-3xl">{theme}</h2>
-              </CarouselItem>
-              <CarouselItem></CarouselItem>
-              <CarouselItem>3</CarouselItem>
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
-        </Container>
+          <span className="text-sm">
+            You can change it later in your profile settings.
+          </span>
+        </div>
+        <div className="flex items-center gap-10 sm:gap-16">
+          <Button onClick={prevTheme}></Button>
+          <div
+            className={clsx(
+              "aspect-square",
+              "min-w-36",
+              "sm:w-80",
+              "rounded-full",
+              "mx-auto",
+              "bg-white",
+              "mix-blend-plus-lighter",
+              "transition",
+              "duration-1000",
+              "ease-out",
+              "hover:scale-105",
+              theme === "indigoChild" || theme === "seeker"
+                ? "animate-rainbowGlow"
+                : "glow hover:biggerglow",
+            )}
+          />
+          <Button onClick={nextTheme}></Button>
+        </div>
+
+        <h2 className="text-3xl">{currentLabel}</h2>
       </section>
     </>
   );

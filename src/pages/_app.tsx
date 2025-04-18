@@ -14,6 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <style jsx global>{`
           html {
             background-color: var(--color-global-background);
+            transition:
+              background-color 0.5s ease,
+              color 0.5s ease;
           }
         `}</style>
         {getLayout(<Component {...pageProps} />)}
