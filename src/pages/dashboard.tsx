@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useUser } from "@/contexts/userContext";
 import Container from "@/components/ui/Container";
 import { useThemeContext } from "@/contexts/themeContext";
+import { GrNext } from "react-icons/gr";
 import clsx from "clsx";
 import {
   Carousel,
@@ -71,7 +72,12 @@ const Dashboard = () => {
           </span>
         </div>
         <div className="flex items-center gap-10 sm:gap-16">
-          <Button onClick={prevTheme}></Button>
+          <button
+            className="hover:text-foreground/80 active:text-foreground/60 rotate-180 p-8 transition-transform duration-200 hover:scale-120 active:scale-140"
+            onClick={prevTheme}
+          >
+            <GrNext />
+          </button>
           <div
             className={clsx(
               "aspect-square",
@@ -84,13 +90,17 @@ const Dashboard = () => {
               "transition",
               "duration-1000",
               "ease-out",
-              "hover:scale-105",
               theme === "indigoChild" || theme === "seeker"
                 ? "animate-rainbowGlow"
                 : "glow hover:biggerglow",
             )}
           />
-          <Button onClick={nextTheme}></Button>
+          <button
+            className="hover:text-foreground/80 active:text-foreground/60 p-8 transition-transform duration-200 hover:scale-120 active:scale-140"
+            onClick={nextTheme}
+          >
+            <GrNext />
+          </button>
         </div>
 
         <h2 className="text-3xl">{currentLabel}</h2>

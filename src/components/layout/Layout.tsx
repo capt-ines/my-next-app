@@ -4,6 +4,7 @@ import Footer from "../ui/Footer";
 import Particle from "./Particle";
 import { randomize } from "@/utils/randomize";
 import { useThemeContext } from "@/contexts/themeContext";
+import MouseLight from "../ui/MouseLight";
 import { Button } from "../ui/button";
 import { themesData } from "@/constants/themes";
 
@@ -22,6 +23,7 @@ function Layout({ children }: LayoutProps) {
   return (
     <>
       <div className="absolute top-0 left-0 -z-40 h-screen w-screen overflow-hidden blur-3xl">
+        <MouseLight />
         <div className="bg-mask/20 pointer-events-none absolute top-0 left-0 z-10 h-full w-full" />
         <div className="absolute -z-30 h-screen w-screen bg-transparent backdrop-blur-3xl"></div>
         {currentPalette && (
@@ -58,7 +60,6 @@ function Layout({ children }: LayoutProps) {
           </>
         )}
       </div>
-
       <div className="overflow-hidden">
         <div className="relative min-h-screen">
           <div className="absolute right-0 left-0">

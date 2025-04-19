@@ -78,7 +78,8 @@ function Home() {
             href={user ? "/explore" : "/register"}
             className={buttonVariants({
               variant: "outline",
-              className: "neon mx-auto w-fit",
+              className:
+                "glow hover:biggerglow mx-auto w-fit transition duration-700",
             })}
           >
             Start creating

@@ -32,6 +32,23 @@ export const themesData = [
     ],
   },
   {
+    key: "healer",
+    label: "Healer",
+    palette: [
+      "#8bac4e",
+      "#3E4D3A", // Desaturated forest green
+      "#4F6D4E", // Muted pine green
+      "#6E8B6E", // Dusty sage
+      "#8DA98D", // Soft mossy green
+      "#A8C0A3", // Muted light olive
+      "#2F3B3C", // Deep cool charcoal
+      "#4B5C5E", // Steely gray
+      "#6C7A7D", // Mid-tone muted slate
+      "#9AA9AC", // Foggy gray
+      "#C0CCCE", // Pale muted gray
+    ],
+  },
+  {
     key: "wanderer",
     label: "Wanderer",
     palette: [
@@ -156,17 +173,16 @@ export const themesData = [
     key: "magician",
     label: "Magician",
     palette: [
-      "#7B1E1E",
-      "#8B004B",
-      "#8B0000",
-      "#B71C1C",
-      "#5D1A1A",
-      "#922B21",
-      "#4A148C",
-      "#311B92",
-      "#6A1B9A",
-      "#2C003E",
-      "#3F1D38",
+      "#7B1E1E", // Deep red
+      "#8B0000", // Dark red
+      "#B71C1C", // Bright red
+      "#5D1A1A", // Dark reddish-brown
+      "#922B21", // Brick red
+      "#D84315", // Orangey red (burnt orange)
+      "#FF5722", // Vivid orangey red
+      "#E57373", // Light warm red
+      "#EF5350", // Soft red, almost coral
+      "#FF7043", // Light orangey-red
     ],
   },
   {
@@ -244,6 +260,20 @@ export const themesData = [
     ],
   },
   {
+    key: "lunaticSoul",
+    label: "Lunatic Soul",
+    palette: [
+      "#37474F",
+      "#7B1E1E", // Deep red
+      "#5D1A1A", // Dark reddish-brown
+      "#008B8B",
+      "#004D40", // ultra dark teal
+      "#00695C", // dark teal
+      "#00796B",
+      "#00695C",
+    ], // rich teal ],
+  },
+  {
     key: "pilgrim",
     label: "Pilgrim",
     palette: [
@@ -264,6 +294,27 @@ export const themesData = [
       "#7F8C8D",
       "#6E7B8B",
       "#5E5F60",
+    ],
+  },
+  {
+    key: "empath",
+    label: "Empath",
+    palette: ["#02f0df", "#ff7100"],
+  },
+  {
+    key: "soothsayer",
+    label: "Soothsayer",
+    palette: [
+      "#1A2C3B", // Deep navy blue — crisp but still rich
+      "#274B63", // Twilight ocean blue — brighter and balanced
+      "#2C5D63", // Teal-blue current — cooler, calmer waters
+      "#3B6E6C", // Sea foam shadow — earthy sea green
+      "#426C77", // Storm blue — bold with depth
+      "#2E4F50", // Dark turquoise gray — clean and modern
+      "#3A606E", // Slate blue — refined and moody
+      "#4A7A8C", // Faded ocean sky — just starting to glow
+      "#557B83", // Cool tide — soft and fresh
+      "#688D92", // Misty sea gray — desaturated clarity
     ],
   },
 ];

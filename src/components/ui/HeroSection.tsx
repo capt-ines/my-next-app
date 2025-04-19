@@ -66,8 +66,7 @@ const HeroSection = () => {
                 onClick={() =>
                   handlePingAndRedirect(user ? "/explore" : "/register")
                 }
-                variant={"secondary"}
-                className={`bg-accent absolute mt-6 translate-y-16 text-xs transition hover:scale-105 min-[400px]:translate-y-20 min-[480px]:translate-y-24 sm:text-sm ${
+                className={`absolute mt-6 translate-y-16 text-xs transition hover:scale-105 min-[400px]:translate-y-20 min-[480px]:translate-y-24 sm:text-sm ${
                   isClicked
                     ? "bg-transparent text-transparent duration-1000"
                     : "duration-500"

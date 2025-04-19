@@ -124,7 +124,7 @@ const Form = (props) => {
             ) : null}
           </div>
 
-          <Button variant={"default"} ref={buttonRef} type="submit">
+          <Button ref={buttonRef} type="submit">
             Sign in
           </Button>
 
