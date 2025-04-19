@@ -70,7 +70,7 @@ const Dashboard = () => {
       <button onClick={signOut}>sign out</button> */}
       <section className="flex flex-col-reverse items-center justify-center gap-20 md:flex-row md:gap-2 lg:gap-20 2xl:gap-30">
         <div className="flex flex-col items-center gap-2">
-          <ul className="flex h-48 flex-col items-end justify-center overflow-auto md:h-96 lg:h-full">
+          <ul className="flex h-48 flex-col items-end overflow-auto scroll-smooth md:h-96 lg:h-full">
             {themesData.map((t) => (
               <li
                 onClick={() => handleSwatchClick(t)}
@@ -108,6 +108,7 @@ const Dashboard = () => {
               <GrNext />
             </button>
             <div
+              style={{ willChange: "transform" }}
               className={clsx(
                 "aspect-square",
                 "min-w-36",
