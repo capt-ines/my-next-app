@@ -41,7 +41,7 @@
   --animate-wiggle: wiggle 1s ease-in-out 2 forwards;
   --animate-shake: shake 0.2s ease-in-out 1;
   --animate-rainbowGlow: rainbowGlow 6s linear infinite;
-  --animate-rainbow: rainbow 3s linear infinite;
+  --animate-rainbow: rainbow 8s linear infinite;
   @keyframes rainbowGlow {
     0% {
       box-shadow:
@@ -83,22 +83,38 @@
 
   @keyframes rainbow {
     0% {
-      background-color: magenta;
+      background-color: red;
+    }
+    10% {
+      background-color: rgba(255, 154, 0, 1);
     }
     20% {
-      background-color: cyan;
-    }
-    40% {
-      background-color: aquamarine;
-    }
-    60% {
-      background-color: springGreen;
-    }
-    80% {
       background-color: yellow;
     }
-    100% {
+    30% {
+      background-color: rgba(63, 218, 216, 1);
+    }
+    40% {
+      background-color: cyan;
+    }
+    50% {
+      background-color: rgba(28, 127, 238, 1);
+    }
+    60% {
       background-color: magenta;
+    }
+
+    70% {
+      background-color: rgba(95, 21, 242, 1);
+    }
+    80% {
+      background-color: rgba(186, 12, 248, 1);
+    }
+    90% {
+      background-color: rgba(251, 7, 217, 1);
+    }
+    100% {
+      background-color: red;
     }
   }
 
@@ -141,7 +157,7 @@
 
 @layer utilities {
   .aero {
-    @apply bg-background/20 border-foreground/20;
+    @apply bg-background/20 border-foreground/20 backdrop-blur-sm;
   }
   .mx-content {
     @apply mx-6 md:mx-8;
@@ -165,6 +181,18 @@
       0 0 10px white,
       0 0 6px var(--glow),
       0 0 100px var(--glow);
+  }
+  .rainbow {
+    background: linear-gradient(
+      45deg,
+      rgba(255, 0, 0, 1) 0%,
+      rgba(255, 154, 0, 1) 10%,
+      rgba(208, 222, 33, 1) 20%,
+      rgb(63, 255, 56) 30%,
+      rgba(63, 218, 216, 1) 40%,
+      rgb(120, 53, 255) 70%,
+      rgba(251, 7, 217, 1) 90%
+    );
   }
 }
 
@@ -191,6 +219,13 @@
   h3 {
     @apply text-lg sm:text-xl;
   }
+  .no-scroll {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+  .no-scroll::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 }
 
 @layer base {
@@ -206,6 +241,15 @@
     --font-serif: "Italiana";
     --font-sans: "Nunito";
     --radius: 0.625rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
 
     --mask: theme(colors.zinc.500);
 
@@ -371,8 +415,8 @@
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
 
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
+    --popover: theme(colors.gray.200);
+    --popover-foreground: theme(colors.black);
 
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
@@ -471,14 +515,14 @@
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
 
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
+    --popover: theme(colors.zinc.100);
+    --popover-foreground: theme(colors.zinc.800);
 
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
 
     --accent: theme(colors.orange.400);
-    --accent-foreground: theme(colors.white);
+    --accent-foreground: theme(colors.zinc.100);
 
     --glow: theme(colors.orange.300);
 
@@ -824,8 +868,8 @@
 
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    --popover: theme(colors.stone.500);
+    --popover-foreground: theme(colors.stone.100);
 
     --destructive: theme(--color-red-400);
     --border: oklch(0.922 0 0);
@@ -872,8 +916,8 @@
 
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    --popover: theme(colors.stone.500);
+    --popover-foreground: theme(colors.stone.100);
 
     --destructive: theme(--color-red-400);
     --border: oklch(0.922 0 0);
@@ -964,7 +1008,7 @@
     --card: oklch(0.205 0 0);
     --card-foreground: oklch(0.985 0 0);
 
-    --popover: oklch(0.205 0 0);
+    --popover: theme(colors.gray.800);
     --popover-foreground: oklch(0.985 0 0);
 
     --muted: oklch(0.269 0 0);
@@ -1023,8 +1067,8 @@
 
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
+    --popover: theme(colors.gray.900);
+    --popover-foreground: theme(colors.gray.100);
 
     --destructive: theme(--color-red-600);
     --border: oklch(0.922 0 0);

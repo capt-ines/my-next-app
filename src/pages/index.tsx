@@ -8,23 +8,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { useUser } from "@/contexts/userContext";
-import { useThemeContext } from "@/contexts/themeContext";
 
 function Home() {
   const { user } = useUser();
-  const { setTheme } = useThemeContext();
-  function toggleTheme() {
-    setTheme("sage");
-  }
+
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <Container style="backdrop-blur-xs">
-        <Button className="z-50" onClick={toggleTheme}></Button>
+      <Container className="backdrop-blur-xs">
         <section className="flex flex-col gap-3 text-center lg:mx-12">
           <header className="my-4">
             <h2 className="text-3xl lg:text-4xl">
@@ -33,7 +28,7 @@ function Home() {
             <h3>We have all the tools you need.</h3>
           </header>
           <article>
-            <Container style="flex flex-col items-center justify-center gap-4">
+            <Container className="flex flex-col items-center justify-center gap-4">
               <div>
                 <h2>Endulge in a tangible visualization experience.</h2>
                 <h3>

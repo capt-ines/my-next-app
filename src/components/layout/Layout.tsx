@@ -6,7 +6,10 @@ import { randomize } from "@/utils/randomize";
 import { useThemeContext } from "@/contexts/themeContext";
 import MouseLight from "../ui/MouseLight";
 import { Button } from "../ui/button";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { themesData } from "@/constants/themes";
+import { usePathname } from "next/navigation";
+import NavIsland from "../ui/NavIsland";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,6 +22,9 @@ function Layout({ children }: LayoutProps) {
 
   const currentTheme = themesData.find((t) => t.key === theme);
   const currentPalette = currentTheme ? currentTheme.palette : [];
+  const pathname = usePathname();
+  const isDashboard = pathname.startsWith("/dashboard");
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
     <>
@@ -65,7 +71,10 @@ function Layout({ children }: LayoutProps) {
           <div className="absolute right-0 left-0">
             <Header />
           </div>
-          <main className="mx-6 mb-20 py-18 md:mx-8">{children}</main>
+          <main className="mx-6 pt-20 pb-6 sm:pt-26 md:mx-8">
+            {children}
+            {isDashboard && !isDesktop ? <NavIsland /> : null}
+          </main>
         </div>
         <Footer />
       </div>

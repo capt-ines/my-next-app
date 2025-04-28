@@ -12,47 +12,6 @@ export const themesData = [
     palette: [],
   },
   {
-    key: "sage",
-    label: "Sage",
-    swatch: "DarkSeaGreen",
-    palette: [
-      "#34c6e3",
-      "#c8df77",
-      "#b577f3",
-      "#c5b3d6",
-      "#87ff5f",
-      "#8ef5b4",
-      "#a3ab78",
-      "#4CAF50",
-      "#81C784",
-      "#66BB6A",
-      "#A5D6A7",
-      "#2E7D32",
-      "#AED581",
-      "#9CCC65",
-      "#43A047",
-      "#C5E1A5",
-    ],
-  },
-  {
-    key: "healer",
-    label: "Healer",
-    swatch: "DarkOliveGreen",
-    palette: [
-      "#8bac4e",
-      "#3E4D3A", // Desaturated forest green
-      "#4F6D4E", // Muted pine green
-      "#6E8B6E", // Dusty sage
-      "#8DA98D", // Soft mossy green
-      "#A8C0A3", // Muted light olive
-      "#2F3B3C", // Deep cool charcoal
-      "#4B5C5E", // Steely gray
-      "#6C7A7D", // Mid-tone muted slate
-      "#9AA9AC", // Foggy gray
-      "#C0CCCE", // Pale muted gray
-    ],
-  },
-  {
     key: "twinFlame",
     label: "Twin Flame",
     swatch: "Pink",
@@ -124,6 +83,7 @@ export const themesData = [
       "#1A0D2E",
     ],
   },
+
   {
     key: "guide",
     label: "Guide",
@@ -145,6 +105,7 @@ export const themesData = [
       "#78909C",
     ],
   },
+
   {
     key: "magician",
     label: "Magician",
@@ -188,6 +149,26 @@ export const themesData = [
       "#FFEBEE",
     ],
   },
+
+  {
+    key: "bodhi",
+    label: "Bodhi",
+    swatch: "Coral",
+    palette: ["#ffb534", "#ff9359", "#705069", "#6d4d7a"],
+  },
+  {
+    key: "clairvoyant",
+    label: "Clairvoyant",
+    swatch: "DarkKhaki",
+    palette: [
+      "#E6E8A3", // Cool muted yellow
+      "#DCD990", // Dusty goldenrod
+      "#C8BE7A", // Muted mustard
+      "#B0A16A", // Earthy straw
+      "#9C8759", // Dry hay brown
+      "#b7c07f",
+    ],
+  },
   {
     key: "oldSoul",
     label: "Old Soul",
@@ -220,18 +201,54 @@ export const themesData = [
       "#FF6F00",
     ],
   },
+
   {
-    key: "clairvoyant",
-    label: "Clairvoyant",
-    swatch: "DarkKhaki",
+    key: "sage",
+    label: "Sage",
+    swatch: "DarkSeaGreen",
     palette: [
-      "#E6E8A3", // Cool muted yellow
-      "#DCD990", // Dusty goldenrod
-      "#C8BE7A", // Muted mustard
-      "#B0A16A", // Earthy straw
-      "#9C8759", // Dry hay brown
-      "#b7c07f",
+      "#34c6e3",
+      "#c8df77",
+      "#b577f3",
+      "#c5b3d6",
+      "#87ff5f",
+      "#8ef5b4",
+      "#a3ab78",
+      "#4CAF50",
+      "#81C784",
+      "#66BB6A",
+      "#A5D6A7",
+      "#2E7D32",
+      "#AED581",
+      "#9CCC65",
+      "#43A047",
+      "#C5E1A5",
     ],
+  },
+  {
+    key: "healer",
+    label: "Healer",
+    swatch: "DarkOliveGreen",
+    palette: [
+      "#8bac4e",
+      "#3E4D3A", // Desaturated forest green
+      "#4F6D4E", // Muted pine green
+      "#6E8B6E", // Dusty sage
+      "#8DA98D", // Soft mossy green
+      "#A8C0A3", // Muted light olive
+      "#2F3B3C", // Deep cool charcoal
+      "#4B5C5E", // Steely gray
+      "#6C7A7D", // Mid-tone muted slate
+      "#9AA9AC", // Foggy gray
+      "#C0CCCE", // Pale muted gray
+    ],
+  },
+
+  {
+    key: "empath",
+    label: "Empath",
+    swatch: "DarkTurquoise",
+    palette: ["#02f0df", "#ff7100"],
   },
   {
     key: "wanderer",
@@ -266,6 +283,21 @@ export const themesData = [
     ],
   },
   {
+    key: "lunaticSoul",
+    label: "Lunatic Soul",
+    swatch: "DarkSlateGrey",
+    palette: [
+      "#37474F",
+      "#7B1E1E", // Deep red
+      "#5D1A1A", // Dark reddish-brown
+      "#008B8B",
+      "#004D40", // ultra dark teal
+      "#00695C", // dark teal
+      "#00796B",
+      "#00695C",
+    ], // rich teal ],
+  },
+  {
     key: "lightworker",
     label: "Lightworker",
     swatch: "LightSkyBlue",
@@ -284,6 +316,7 @@ export const themesData = [
       "#D1D1D1",
     ],
   },
+
   {
     key: "soothsayer",
     label: "Soothsayer",
@@ -301,6 +334,7 @@ export const themesData = [
       "#688D92", // Misty sea gray — desaturated clarity
     ],
   },
+
   {
     key: "pilgrim",
     label: "Pilgrim",
@@ -325,6 +359,7 @@ export const themesData = [
       "#5E5F60",
     ],
   },
+
   {
     key: "nomad",
     label: "Nomad",
@@ -348,33 +383,5 @@ export const themesData = [
       "#4E5A68",
       "#3F4040",
     ],
-  },
-  {
-    key: "empath",
-    label: "Empath",
-    swatch: "DarkTurquoise",
-    palette: ["#02f0df", "#ff7100"],
-  },
-  {
-    key: "lunaticSoul",
-    label: "Lunatic Soul",
-    swatch: "DarkSlateGrey",
-    palette: [
-      "#37474F",
-      "#7B1E1E", // Deep red
-      "#5D1A1A", // Dark reddish-brown
-      "#008B8B",
-      "#004D40", // ultra dark teal
-      "#00695C", // dark teal
-      "#00796B",
-      "#00695C",
-    ], // rich teal ],
-  },
-
-  {
-    key: "bodhi",
-    label: "Bodhi",
-    swatch: "Coral",
-    palette: ["#ffb534", "#ff9359", "#705069", "#6d4d7a"],
   },
 ];

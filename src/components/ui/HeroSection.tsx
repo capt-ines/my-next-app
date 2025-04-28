@@ -1,16 +1,14 @@
 import { Button } from "./button";
-import MouseLight from "./MouseLight";
+
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { useUser } from "@/contexts/userContext";
-import { useThemeContext } from "@/contexts/themeContext";
 
 const HeroSection = () => {
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
   const { user } = useUser();
-  const { theme } = useThemeContext();
 
   const handlePingAndRedirect = (url: string) => {
     setIsClicked(true);
@@ -38,12 +36,13 @@ const HeroSection = () => {
         <div className="group relative aspect-square w-full max-w-md">
           {/* ✨ Glow layer, reacts to group hover */}
           <div
+            style={{ willChange: "transform" }}
             className={`glow absolute inset-0 z-0 scale-105 rounded-full bg-white mix-blend-plus-lighter transition duration-1000 ease-out ${isClicked ? "bg-foreground/30 scale-155" : "group-hover:scale-110"}`}
           ></div>
 
           {/* 🌀 Main content layer */}
           <div
-            className={`relative z-10 flex h-full w-full flex-col items-center justify-center rounded-full bg-white px-5 transition duration-1000 ease-out sm:px-10 ${isClicked ? "bg-foreground/30 scale-150" : "hover:scale-105"}`}
+            className={`relative z-10 flex h-full w-full flex-col items-center justify-center rounded-full bg-white px-5 transition duration-1000 ease-out sm:px-10 ${isClicked ? "bg-foreground/30 scale-150" : "group-hover:scale-105"}`}
           >
             <div className="relative z-20 flex flex-col items-center text-center">
               <h1

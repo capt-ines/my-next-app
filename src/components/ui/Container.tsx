@@ -1,15 +1,14 @@
+import clsx from "clsx";
 import React from "react";
 
 interface ContainerProps {
   children: React.ReactNode;
-  style?: string;
+  className?: string;
 }
 
-const Container: React.FC<ContainerProps> = ({ children, style = "" }) => {
+const Container: React.FC<ContainerProps> = ({ children, className }) => {
   return (
-    <div
-      className={`aero rounded-lg border-1 px-3 py-3 shadow-xs min-[400px]:px-9 sm:py-5 ${style}`}
-    >
+    <div className={clsx("aero rounded-lg border-1 p-3 shadow-xs", className)}>
       {children}
     </div>
   );

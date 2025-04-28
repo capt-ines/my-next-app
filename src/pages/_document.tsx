@@ -10,6 +10,12 @@ export default function MyDocument() {
   return (
     <Html>
       <Head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/png"
+          sizes="32x32"
+        />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </Head>
       <body>
