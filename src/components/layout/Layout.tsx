@@ -71,7 +71,7 @@ function Layout({ children }: LayoutProps) {
           <div className="absolute right-0 left-0">
             <Header />
           </div>
-          <main className="mx-6 pt-20 pb-6 sm:pt-26 md:mx-8">
+          <main className="mx-4 pt-20 pb-6 sm:pt-26 md:mx-8">
             {children}
             {isDashboard && !isDesktop ? <NavIsland /> : null}
           </main>

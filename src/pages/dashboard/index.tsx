@@ -36,14 +36,14 @@ const Dashboard = () => {
               : "glow hover:biggerglow",
           )}
         />
-        <h1 className="mt-3">{username}</h1>
+        <h1 className="mt-5">{username}</h1>
       </div>
 
       <section>
         <Tabs defaultValue="dreamPreview">
           <TabsList className="aero mx-auto grid h-20 w-fit grid-flow-col grid-rows-2 min-[500px]:flex min-[500px]:h-auto">
             <TabsTrigger className="col-span-3" value="dreamPreview">
-              Dream Preview
+              <span className="text-secondary">Dream Preview</span>
             </TabsTrigger>
             <TabsTrigger value="journals">Journals</TabsTrigger>
             <TabsTrigger value="affirmations">Affirmations</TabsTrigger>
@@ -51,7 +51,7 @@ const Dashboard = () => {
           </TabsList>
           <TabsContent value="dreamPreview"></TabsContent>
           <TabsContent value="journals">
-            <Container>
+            <Container className="lg:mx-20">
               <div className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3">
                 <div className="flex flex-col items-center gap-1">
                   <IoMdJournal size={60} className="text-pink-300" />

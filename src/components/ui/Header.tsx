@@ -40,8 +40,7 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "fixed z-[100] flex w-full items-center justify-between px-6 py-2",
-        isDashboard ? "" : "bg-background/10 backdrop-blur-sm",
+        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-6 pt-2 pb-6",
       )}
     >
       <Link href="/">
