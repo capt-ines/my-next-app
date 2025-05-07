@@ -8,7 +8,7 @@ interface ContainerProps {
 
 const Container: React.FC<ContainerProps> = ({ children, className }) => {
   return (
-    <div className={clsx("aero rounded-lg border-1 p-3 shadow-xs", className)}>
+    <div className={clsx("aero rounded-md border-1 p-3 shadow-xs", className)}>
       {children}
     </div>
   );

@@ -14,6 +14,6 @@ export const authNavLinksData = [
 export const dashboardNavLinksData = [
   { label: "Journal", href: "/dashboard/journal" },
   { label: "Affirmations", href: "/dashboard/affirmations" },
-  { label: "Dream preview", href: "/dashboard/dream-preview" },
+  { label: "Soulscapes", href: "/dashboard/soulscapes" },
   { label: "Mockup Studio", href: "/dashboard/mockup-studio" },
 ];

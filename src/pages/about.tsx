@@ -10,7 +10,7 @@ import Container from "@/components/ui/Container";
 
 function About() {
   return (
-    <Container className="mx-content">
+    <Container className="mx-content p-3">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

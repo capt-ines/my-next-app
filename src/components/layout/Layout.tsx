@@ -23,7 +23,7 @@ function Layout({ children }: LayoutProps) {
   const currentTheme = themesData.find((t) => t.key === theme);
   const currentPalette = currentTheme ? currentTheme.palette : [];
   const pathname = usePathname();
-  const isDashboard = pathname.startsWith("/dashboard");
+  const isHome = pathname === "/";
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -71,9 +71,9 @@ function Layout({ children }: LayoutProps) {
           <div className="absolute right-0 left-0">
             <Header />
           </div>
-          <main className="mx-4 pt-20 pb-6 sm:pt-26 md:mx-8">
+          <main className="mx-4.5 pt-20 pb-6 sm:pt-26 md:mx-8">
             {children}
-            {isDashboard && !isDesktop ? <NavIsland /> : null}
+            {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
           </main>
         </div>
         <Footer />

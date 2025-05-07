@@ -214,7 +214,29 @@
       black 50%
     );
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+  }
+
+  .blur-gradient-top {
+    position: fixed;
+  }
+
+  .blur-gradient-top::after {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    z-index: -1;
+
+    background: var(--header);
+    mask: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 0%,
+      rgba(0, 0, 0, 0.7) 30%,
+      black 50%
+    );
+
+    backdrop-filter: blur(8px);
   }
 
   .gradient-blur {
@@ -324,6 +346,16 @@
 }
 
 @layer components {
+  /* .tiptap p {
+    margin: 1em 0;
+  } */
+  /* .ProseMirror {
+
+  } */
+  .ProseMirror:focus {
+    outline: none;
+  }
+
   .link {
     @apply text-secondary cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;
   }
@@ -893,7 +925,7 @@
     --muted: oklch(0.269 0 0);
     --muted-foreground: oklch(0.708 0 0);
 
-    --accent: #0025a2;
+    --accent: #3e5dc2;
     --accent-foreground: theme(colors.white);
 
     --glow: #0025a2;
@@ -925,6 +957,8 @@
     --index-background2: theme(colors.stone.100);
 
     --mask: theme(colors.stone.300);
+
+    --header: rgba(255, 255, 255, 0.204);
 
     --background: theme(colors.stone.100);
     --foreground: theme(colors.stone.900);

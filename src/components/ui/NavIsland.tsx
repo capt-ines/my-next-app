@@ -1,19 +1,23 @@
 import React from "react";
-import Container from "./Container";
-import { PiBookThin } from "react-icons/pi";
-import { PiBookmarksSimpleThin } from "react-icons/pi";
-import { PiButterflyThin } from "react-icons/pi";
-import { PiSquaresFourThin } from "react-icons/pi";
-import { PiUserCircleThin } from "react-icons/pi";
+// import Container from "./Container";
+// import { PiBookThin } from "react-icons/pi";
+// import { PiBookmarksSimpleThin } from "react-icons/pi";
+// import { PiButterflyThin } from "react-icons/pi";
+// import { PiSquaresFourThin } from "react-icons/pi";
+// import { PiUserCircleThin } from "react-icons/pi";
+// import { PiCompassRoseThin } from "react-icons/pi";
+// import { PiPlusCircleThin } from "react-icons/pi";
+// import Link from "next/link";
+// import clsx from "clsx";
 
-const NavIsland = () => {
+type NavIslandProps = {
+  children: React.ReactNode;
+};
+
+const NavIsland = ({ children }: NavIslandProps) => {
   return (
-    <div className="bg-background/20 fixed right-0 bottom-0 left-0 flex items-center justify-between gap-2 px-5 py-3 backdrop-blur-md">
-      <PiBookThin size={40} />
-      <PiBookmarksSimpleThin size={40} />
-      <PiButterflyThin size={40} />
-      <PiSquaresFourThin size={40} />
-      <PiUserCircleThin size={40} />
+    <div className="blur-gradient-top fixed right-0 bottom-0 left-0 flex items-center justify-center px-4.5 pt-5 pb-3">
+      <div className="flex items-center justify-center gap-2">{children}</div>
     </div>
   );
 };

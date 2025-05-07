@@ -60,7 +60,7 @@ function Home() {
           <article>
             <Container>
               <h2>Preview your dream future.</h2>
-              <h3>Dream preview – a vision board</h3>
+              <h3>Soulscape – a vision board</h3>
             </Container>
           </article>
           <article>

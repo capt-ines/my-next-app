@@ -40,16 +40,17 @@ const Dashboard = () => {
       </div>
 
       <section>
-        <Tabs defaultValue="dreamPreview">
+        <Tabs defaultValue="soulscapes">
           <TabsList className="aero mx-auto grid h-20 w-fit grid-flow-col grid-rows-2 min-[500px]:flex min-[500px]:h-auto">
-            <TabsTrigger className="col-span-3" value="dreamPreview">
-              <span className="text-secondary">Dream Preview</span>
+            <TabsTrigger className="col-span-2" value="soulscapes">
+              <span className="text-secondary">Soulscapes</span>
             </TabsTrigger>
+            <TabsTrigger value="ideas">Ideas</TabsTrigger>
             <TabsTrigger value="journals">Journals</TabsTrigger>
             <TabsTrigger value="affirmations">Affirmations</TabsTrigger>
-            <TabsTrigger value="mockupStudio">Mockup Studio</TabsTrigger>
+            <TabsTrigger value="mockups">Mockups</TabsTrigger>
           </TabsList>
-          <TabsContent value="dreamPreview"></TabsContent>
+          <TabsContent value="soulscapes"></TabsContent>
           <TabsContent value="journals">
             <Container className="lg:mx-20">
               <div className="grid grid-cols-2 justify-items-center gap-3 sm:grid-cols-3">
@@ -76,7 +77,7 @@ const Dashboard = () => {
       </section>
       {/* <section className="grid grid-cols-2 gap-1 lg:mx-20">
         <Container className="col-span-2 p-3">
-          <h2>Dream preview</h2>
+          <h2>soulscapes</h2>
         </Container>
 
         <Container className="flex flex-col gap-3">

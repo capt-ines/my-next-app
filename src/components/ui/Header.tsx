@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-6 pt-2 pb-6",
+        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-4.5 pt-2 pb-5",
       )}
     >
       <Link href="/">
