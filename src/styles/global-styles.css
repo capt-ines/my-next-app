@@ -43,6 +43,7 @@
   --animate-shake: shake 0.2s ease-in-out 1;
   --animate-rainbowGlow: rainbowGlow 6s linear infinite;
   --animate-rainbow: rainbow 8s linear infinite;
+
   @keyframes rainbowGlow {
     0% {
       box-shadow:
@@ -158,7 +159,7 @@
 
 @layer utilities {
   .aero {
-    @apply bg-background/20 border-foreground/20 backdrop-blur-sm;
+    @apply bg-background/20 border-1 shadow-xs border-foreground/20 backdrop-blur-sm;
   }
   .mx-content {
     @apply mx-6 md:mx-8;
@@ -346,16 +347,6 @@
 }
 
 @layer components {
-  /* .tiptap p {
-    margin: 1em 0;
-  } */
-  /* .ProseMirror {
-
-  } */
-  .ProseMirror:focus {
-    outline: none;
-  }
-
   .link {
     @apply text-secondary cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;
   }
