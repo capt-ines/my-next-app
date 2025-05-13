@@ -3,7 +3,7 @@ import { CiSearch } from "react-icons/ci";
 import Container from "./Container";
 import { Input } from "./input";
 
-const Searchbar = () => {
+const Searchbar = ({ placeholder }: { placeholder: string }) => {
   return (
     <Container className="flex items-center justify-between gap-0.5 px-2 py-2">
       <CiSearch
@@ -12,7 +12,7 @@ const Searchbar = () => {
       />
       <input
         className="peer focus:text-foreground focus:border-foreground placeholder:text-muted-foreground w-full bg-transparent focus:ring-0 focus:ring-transparent focus:outline-none"
-        placeholder="Search"
+        placeholder={placeholder}
       />
     </Container>
   );

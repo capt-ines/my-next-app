@@ -1,8 +1,10 @@
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
+import { Block } from "@blocknote/core";
 import { en } from "@blocknote/core/locales";
+import { useEffect, useState } from "react";
 import { useCreateBlockNote } from "@blocknote/react";
-import React, { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/component";
 import { BlockNoteView, Theme } from "@blocknote/mantine";
 import {
   BasicTextStyleButton,
@@ -18,7 +20,6 @@ import {
   UnnestBlockButton,
 } from "@blocknote/react";
 import { Button } from "./button";
-import Container from "./Container";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -27,8 +28,21 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useUser } from "@/contexts/userContext";
+import ArrowButton from "./arrowButton";
 
-const Editor = () => {
+const Editor = ({
+  entryId,
+  isNew = false,
+  initialContent,
+}: {
+  entryId?: any;
+  isNew?: boolean;
+  initialContent?: any;
+}) => {
+  const supabase = createClient();
+  const { user } = useUser();
+  const locale = en;
   const options = {
     weekday: "long",
     year: "numeric",
@@ -92,17 +106,16 @@ const Editor = () => {
       },
     ],
   };
-
   const [template, setTemplate] = useState(journalTemplates.journal);
+  const [blocks, setBlocks] = useState<Block[]>([]);
 
-  const locale = en;
   const editor = useCreateBlockNote({
     domAttributes: {
       block: {
         class: "blocknote-block",
       },
     },
-    initialContent: template,
+    initialContent: isNew ? template : (initialContent ?? []),
     dictionary: {
       ...locale,
       placeholders: {
@@ -168,43 +181,75 @@ const Editor = () => {
     dark: aeroDark,
   };
 
-  // editor.insertBlocks(
-  //   [
-  //     {
-  //       content: new Date().toDateString(),
-  //     },
-  //   ],
-  //   editor.document[0],
-  //   "before",
-  // );
-
   return (
     <>
-      <Breadcrumb className="mb-2">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Journals</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Reflections</BreadcrumbPage>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Title</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <h1>Reflections</h1>
-      <div className="bg-background/80 mt-3 min-h-screen rounded-md py-5 shadow-xs backdrop-blur-lg md:mt-5 lg:mx-10">
-        {/* <div>
-        <Button onClick={() => editor.toggleStyles({ bold: true })}></Button>
-        <Button onClick={() => editor.addStyles(BlockTypeSelect)}></Button>
-      </div> */}
+      <div className="flex min-h-screen flex-col rounded-md py-5">
+        <div className="mx-4.5 mb-3">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink href="/">Journals</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Reflections</BreadcrumbPage>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Title</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="my-3 flex items-center justify-between">
+            <h1 className="font-serif text-lg uppercase sm:text-xl">
+              Reflections
+            </h1>
+            <Button
+              className="text-muted-foreground hover:bg-background/10 border-muted-foreground/60 border bg-transparent hover:cursor-pointer"
+              onClick={async () => {
+                if (isNew) {
+                  const { error } = await supabase
+                    .from("journal_entries")
+                    .insert([
+                      {
+                        user_id: user?.id,
+                        title: "My Journal",
+                        content: blocks,
+                      },
+                    ]);
+
+                  if (error) {
+                    console.error("Insert error:", error);
+                  } else {
+                    console.log("Journal entry created!");
+                    // Optionally redirect here
+                  }
+                } else {
+                  const { error } = await supabase
+                    .from("journal_entries")
+                    .update({ content: blocks })
+                    .eq("id", entryId);
+
+                  if (error) {
+                    console.error("Update error:", error);
+                  } else {
+                    console.log("Journal entry updated!");
+                  }
+                }
+              }}
+            >
+              Save
+            </Button>
+          </div>
+          <hr className="text-muted-foreground" />
+        </div>
         <BlockNoteView
           editor={editor}
           formattingToolbar={false}
           theme={aeroTheme}
+          onChange={() => {
+            setBlocks(editor.document);
+          }}
         >
           <FormattingToolbarController
             formattingToolbar={() => (
@@ -255,6 +300,10 @@ const Editor = () => {
             )}
           ></FormattingToolbarController>
         </BlockNoteView>
+        <div className="text-muted-foreground flex w-full items-center justify-end px-4.5">
+          <span className="translate-x-2">Next entry</span>
+          <ArrowButton direction="right" />
+        </div>
       </div>
     </>
   );

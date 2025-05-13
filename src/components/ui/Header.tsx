@@ -34,7 +34,7 @@ const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const pathname = usePathname();
   const isIndex = pathname === "/";
-  const isDashboard = pathname.startsWith("/dashboard");
+  // const isDashboard = pathname.startsWith("/dashboard");
   const color = isIndex ? "white" : "foreground";
 
   return (
@@ -54,7 +54,7 @@ const Header = () => {
           />
         </div>
       </Link>
-      {isDesktop ? (
+      {/* {isDesktop ? (
         <Navbar />
       ) : isDashboard ? (
         <DropdownMenu>
@@ -62,7 +62,7 @@ const Header = () => {
             <RxDotsHorizontal size={30} />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="mx-content min-w-36">
-            {/* <DropdownMenuLabel>
+            <DropdownMenuLabel>
               <div className="flex gap-2 items-center">
                 <CiSettings size={20} />
                 <span>Create</span>
@@ -100,7 +100,7 @@ const Header = () => {
                 <span>Mockup Studio</span>
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
+            <DropdownMenuSeparator />
             <DropdownMenuLabel>
               <div className="flex items-center gap-2">
                 <CiSettings size={20} />
@@ -145,7 +145,7 @@ const Header = () => {
         </DropdownMenu>
       ) : (
         <HamburgerMenu />
-      )}
+      )} */}
     </header>
   );
 };

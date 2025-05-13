@@ -13,7 +13,7 @@ const ArrowButton = ({
 }) => {
   return (
     <button
-      className="hover:text-foreground/80 active:text-foreground/60 cursor-pointer p-4 transition-transform duration-200 hover:scale-120 active:scale-140"
+      className="hover:text-muted-foreground/90 text-muted-foreground cursor-pointer p-4 transition-transform duration-200 hover:scale-120 active:scale-140"
       onClick={onClick}
     >
       <GrNext

@@ -24,6 +24,7 @@ function Layout({ children }: LayoutProps) {
   const currentPalette = currentTheme ? currentTheme.palette : [];
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isJournal = pathname.includes("/journal");
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -71,10 +72,17 @@ function Layout({ children }: LayoutProps) {
           <div className="absolute right-0 left-0">
             <Header />
           </div>
-          <main className="mx-4.5 pt-20 pb-6 sm:pt-26 md:mx-8">
-            {children}
-            {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
-          </main>
+          {isJournal ? (
+            <main className="pt-20 pb-6 sm:pt-26 md:mx-8">
+              {children}
+              {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
+            </main>
+          ) : (
+            <main className="mx-4.5 pt-20 pb-6 sm:pt-26 md:mx-8">
+              {children}
+              {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
+            </main>
+          )}
         </div>
         <Footer />
       </div>

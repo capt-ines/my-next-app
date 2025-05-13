@@ -466,8 +466,8 @@
     --popover: oklch(0.205 0 0);
     --popover-foreground: oklch(0.985 0 0);
 
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
+    --muted: theme(colors.zinc.600);
+    --muted-foreground: theme(colors.zinc.300);
 
     --mask: theme(colors.zinc.800);
 
