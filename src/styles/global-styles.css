@@ -346,6 +346,21 @@
   --font-cursive: "Zeyada", cursive;
 }
 
+.bn-container[data-bn-font] * {
+  font-family: "Nunito", sans-serif;
+  background-color: transparent;
+}
+
+/* .bn-container[data-bn-theme][data-color-scheme] {
+  --bn-colors-menu-text: var(--foreground);
+  --bn-colors-menu-background: var(--background);
+} */
+
+/* .bn-container[data-bn-theme][data-color-scheme="dark"] {
+  --bn-colors-menu-text: var(--foreground);
+  --bn-colors-menu-background: var(--background);
+} */
+
 @layer components {
   .link {
     @apply text-secondary cursor-pointer transition-all duration-400 ease-in-out hover:scale-102;

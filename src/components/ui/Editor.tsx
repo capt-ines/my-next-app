@@ -2,10 +2,17 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { Block } from "@blocknote/core";
 import { en } from "@blocknote/core/locales";
+import { themesData } from "@/constants/themes";
+import { useThemeContext } from "@/contexts/themeContext";
 import { useEffect, useState } from "react";
 import { useCreateBlockNote } from "@blocknote/react";
 import { createClient } from "@/utils/supabase/component";
-import { BlockNoteView, Theme } from "@blocknote/mantine";
+import {
+  BlockNoteView,
+  Theme,
+  darkDefaultTheme,
+  lightDefaultTheme,
+} from "@blocknote/mantine";
 import {
   BasicTextStyleButton,
   BlockTypeSelect,
@@ -108,6 +115,8 @@ const Editor = ({
   };
   const [template, setTemplate] = useState(journalTemplates.journal);
   const [blocks, setBlocks] = useState<Block[]>([]);
+  const { theme } = useThemeContext();
+  const darkThemes = themesData.filter((theme) => theme.type === "dark");
 
   const editor = useCreateBlockNote({
     domAttributes: {
@@ -127,59 +136,6 @@ const Editor = ({
       },
     },
   });
-
-  const aeroLight = {
-    colors: {
-      editor: {
-        text: "var(--foreground)",
-        background: "#ffffff0",
-      },
-      menu: {
-        text: "var(--foreground)",
-        background: "#ffffff9a",
-      },
-      // tooltip: {
-      //   text: "#ffffff",
-      //   background: "#b00000",
-      // },
-      // hovered: {
-      //   text: "#ffffff",
-      //   background: "#b00000",
-      // },
-      // selected: {
-      //   text: "#ffffff",
-      //   background: "#c50000",
-      // },
-      // disabled: {
-      //   text: "#9b0000",
-      //   background: "#7d0000",
-      // },
-      shadow: "#00000020",
-      border: "#77777778",
-      // sideMenu: "#bababa",
-      // highlights: lightDefaultTheme.colors!.highlights,
-    },
-    borderRadius: 4,
-  } satisfies Theme;
-
-  const aeroDark = {
-    ...aeroLight,
-    colors: {
-      editor: {
-        text: "var(--foreground)",
-        background: "#1818180",
-      },
-      menu: {
-        text: "var(--foreground)",
-        background: "#1818189a",
-      },
-    },
-  } satisfies Theme;
-
-  const aeroTheme = {
-    light: aeroLight,
-    dark: aeroDark,
-  };
 
   return (
     <>
@@ -205,7 +161,7 @@ const Editor = ({
               Reflections
             </h1>
             <Button
-              className="text-muted-foreground hover:bg-background/10 border-muted-foreground/60 border bg-transparent hover:cursor-pointer"
+              variant={"ghost"}
               onClick={async () => {
                 if (isNew) {
                   const { error } = await supabase
@@ -244,9 +200,14 @@ const Editor = ({
           <hr className="text-muted-foreground" />
         </div>
         <BlockNoteView
+          data-bn-font
+          theme={
+            darkThemes.some((darkTheme) => darkTheme.key === theme)
+              ? darkDefaultTheme
+              : lightDefaultTheme
+          }
           editor={editor}
           formattingToolbar={false}
-          theme={aeroTheme}
           onChange={() => {
             setBlocks(editor.document);
           }}

@@ -3,16 +3,19 @@ export const themesData = [
     key: "indigoChild",
     label: "Indigo Child",
     swatch: "Indigo",
+    type: "light",
     palette: [],
   },
   {
     key: "seeker",
     label: "Seeker",
     swatch: "Indigo",
+    type: "dark",
     palette: [],
   },
   {
     key: "twinFlame",
+    type: "light",
     label: "Twin Flame",
     swatch: "Pink",
     palette: [
@@ -45,6 +48,7 @@ export const themesData = [
   },
   {
     key: "oracle",
+    type: "dark",
     label: "Oracle",
     swatch: "Magenta",
     palette: [
@@ -87,6 +91,7 @@ export const themesData = [
   {
     key: "guide",
     label: "Guide",
+    type: "light",
     swatch: "Salmon",
     palette: [
       "#FF8A80",
@@ -108,6 +113,7 @@ export const themesData = [
 
   {
     key: "magician",
+    type: "dark",
     label: "Magician",
     swatch: "Red",
     palette: [
@@ -126,6 +132,7 @@ export const themesData = [
   {
     key: "starseed",
     label: "Starseed",
+    type: "light",
     swatch: "SandyBrown",
     palette: [
       "#FF7043",
@@ -153,12 +160,14 @@ export const themesData = [
   {
     key: "bodhi",
     label: "Bodhi",
+    type: "light",
     swatch: "Coral",
     palette: ["#ffb534", "#ff9359", "#705069", "#6d4d7a"],
   },
   {
     key: "clairvoyant",
     label: "Clairvoyant",
+    type: "dark",
     swatch: "DarkKhaki",
     palette: [
       "#E6E8A3", // Cool muted yellow
@@ -171,6 +180,7 @@ export const themesData = [
   },
   {
     key: "oldSoul",
+    type: "dark",
     label: "Old Soul",
     swatch: "DarkGoldenRod",
     palette: [
@@ -204,6 +214,7 @@ export const themesData = [
 
   {
     key: "sage",
+    type: "light",
     label: "Sage",
     swatch: "DarkSeaGreen",
     palette: [
@@ -227,6 +238,7 @@ export const themesData = [
   },
   {
     key: "healer",
+    type: "dark",
     label: "Healer",
     swatch: "DarkOliveGreen",
     palette: [
@@ -247,11 +259,13 @@ export const themesData = [
   {
     key: "empath",
     label: "Empath",
+    type: "light",
     swatch: "DarkTurquoise",
     palette: ["#02f0df", "#ff7100"],
   },
   {
     key: "wanderer",
+    type: "dark",
     label: "Wanderer",
     swatch: "Teal",
     palette: [
@@ -285,6 +299,7 @@ export const themesData = [
   {
     key: "lunaticSoul",
     label: "Lunatic Soul",
+    type: "dark",
     swatch: "DarkSlateGrey",
     palette: [
       "#37474F",
@@ -299,6 +314,7 @@ export const themesData = [
   },
   {
     key: "lightworker",
+    type: "light",
     label: "Lightworker",
     swatch: "LightSkyBlue",
     palette: [
@@ -319,6 +335,7 @@ export const themesData = [
 
   {
     key: "soothsayer",
+    type: "dark",
     label: "Soothsayer",
     swatch: "MidnightBlue",
     palette: [
@@ -337,6 +354,7 @@ export const themesData = [
 
   {
     key: "pilgrim",
+    type: "light",
     label: "Pilgrim",
     swatch: "LightGrey",
     palette: [
@@ -362,6 +380,7 @@ export const themesData = [
 
   {
     key: "nomad",
+    type: "dark",
     label: "Nomad",
     swatch: "DimGrey",
     palette: [

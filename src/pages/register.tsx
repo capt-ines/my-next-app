@@ -63,7 +63,7 @@ const Form = (props) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
-      <Container style="max-w-96 mx-auto">
+      <Container className="mx-auto max-w-96">
         <form
           onSubmit={props.handleSubmit}
           className="flex flex-col gap-3 text-center"

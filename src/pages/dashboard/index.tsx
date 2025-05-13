@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
 import { set } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
   const { username, user } = useUser();
@@ -143,10 +144,8 @@ const Dashboard = () => {
                   </AccordionItem>
                 ))}
               </Accordion>
-
-              <hr />
               {isAddingJournal ? (
-                <div className="flex items-center justify-between py-1">
+                <div className="flex items-center justify-between pt-2">
                   <div className="flex w-full items-center gap-1">
                     <Popover>
                       <PopoverTrigger className="cursor-pointer">
@@ -255,14 +254,13 @@ const Dashboard = () => {
                   </button>
                 </div>
               ) : (
-                <Container className="mt-3 h-9 py-0 pr-0 pb-0 pl-0">
-                  <button
-                    className="flex h-full w-full cursor-pointer items-center justify-center"
-                    onClick={() => setIsAddingJournal(true)}
-                  >
-                    <IoAdd />
-                  </button>
-                </Container>
+                <Button
+                  variant={"ghost"}
+                  className="mt-3 h-9 w-full"
+                  onClick={() => setIsAddingJournal(true)}
+                >
+                  <IoAdd />
+                </Button>
               )}
             </Container>
           </TabsContent>
