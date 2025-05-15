@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-4.5 pt-2 pb-5",
+        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-4.5 pt-2 pb-5 md:px-6 md:pt-3",
       )}
     >
       <Link href="/">
@@ -54,98 +54,99 @@ const Header = () => {
           />
         </div>
       </Link>
-      {/* {isDesktop ? (
+      {isDesktop ? (
         <Navbar />
-      ) : isDashboard ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2">
-            <RxDotsHorizontal size={30} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="mx-content min-w-36">
-            <DropdownMenuLabel>
-              <div className="flex gap-2 items-center">
-                <CiSettings size={20} />
-                <span>Create</span>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/dream-preview"
-                className="flex gap-2 items-center"
-              >
-                <span>Dream Preview</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/journal"
-                className="flex gap-2 items-center"
-              >
-                <span>Journal</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/affirmations"
-                className="flex gap-2 items-center"
-              >
-                <span>Affirmations</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/mockup-studio"
-                className="flex gap-2 items-center"
-              >
-                <span>Mockup Studio</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>
-              <div className="flex items-center gap-2">
-                <CiSettings size={20} />
-                <span>Settings</span>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/settings/details"
-                className="flex items-center gap-2"
-              >
-                <span>Personal details</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/settings/details"
-                className="flex items-center gap-2"
-              >
-                <span>Profile management</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="">
-              <Link
-                href="/dashboard/settings/aura"
-                className="flex items-center gap-2"
-              >
-                <span>Aura</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="">
-              <div
-                onClick={() => signOut(router)}
-                className="flex items-center gap-2"
-              >
-                <PiDoorOpenThin className="text-foreground size-5"></PiDoorOpenThin>
-                <span>Sign out</span>
-              </div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       ) : (
+        // isDashboard ? (
+        //   <DropdownMenu>
+        //     <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2">
+        //       <RxDotsHorizontal size={30} />
+        //     </DropdownMenuTrigger>
+        //     <DropdownMenuContent className="mx-content min-w-36">
+        //       <DropdownMenuLabel>
+        //         <div className="flex gap-2 items-center">
+        //           <CiSettings size={20} />
+        //           <span>Create</span>
+        //         </div>
+        //       </DropdownMenuLabel>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/dream-preview"
+        //           className="flex gap-2 items-center"
+        //         >
+        //           <span>Dream Preview</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/journal"
+        //           className="flex gap-2 items-center"
+        //         >
+        //           <span>Journal</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/affirmations"
+        //           className="flex gap-2 items-center"
+        //         >
+        //           <span>Affirmations</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/mockup-studio"
+        //           className="flex gap-2 items-center"
+        //         >
+        //           <span>Mockup Studio</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuSeparator />
+        //       <DropdownMenuLabel>
+        //         <div className="flex items-center gap-2">
+        //           <CiSettings size={20} />
+        //           <span>Settings</span>
+        //         </div>
+        //       </DropdownMenuLabel>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/settings/details"
+        //           className="flex items-center gap-2"
+        //         >
+        //           <span>Personal details</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/settings/details"
+        //           className="flex items-center gap-2"
+        //         >
+        //           <span>Profile management</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuItem className="">
+        //         <Link
+        //           href="/dashboard/settings/aura"
+        //           className="flex items-center gap-2"
+        //         >
+        //           <span>Aura</span>
+        //         </Link>
+        //       </DropdownMenuItem>
+        //       <DropdownMenuSeparator />
+        //       <DropdownMenuItem className="">
+        //         <div
+        //           onClick={() => signOut(router)}
+        //           className="flex items-center gap-2"
+        //         >
+        //           <PiDoorOpenThin className="text-foreground size-5"></PiDoorOpenThin>
+        //           <span>Sign out</span>
+        //         </div>
+        //       </DropdownMenuItem>
+        //     </DropdownMenuContent>
+        //   </DropdownMenu>
+        // ) :
         <HamburgerMenu />
-      )} */}
+      )}
     </header>
   );
 };

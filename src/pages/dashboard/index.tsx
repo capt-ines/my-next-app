@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import ColorPicker from "@rc-component/color-picker";
+import { RxDotsHorizontal } from "react-icons/rx";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import "@rc-component/color-picker/assets/index.css";
 import type { GetServerSidePropsContext } from "next";
 import { createClient } from "@/utils/supabase/server-props";
@@ -20,7 +28,6 @@ import { IoMdJournal } from "react-icons/io";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import clsx from "clsx";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Searchbar from "@/components/ui/Searchbar";
 import {
   Accordion,
@@ -28,57 +35,87 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { set } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import {
+  deleteRow,
+  updateRow,
+  fetchRows,
+  insertRow,
+} from "@/utils/auth/fetchData";
+import { GoCheck } from "react-icons/go";
+interface Entry {
+  id: string;
+  title: string;
+  created_at: string;
+  journal_id?: string;
+}
+interface Journal {
+  color: string;
+  title: string;
+  id?: string;
+}
 
 const Dashboard = () => {
   const { username, user } = useUser();
-  const router = useRouter();
   const { theme } = useThemeContext();
   const supabase = createComponentClient();
-  const [journalTitle, setJournalTitle] = useState("Journal");
-  const [journalColor, setJournalColor] = useState("");
-  const [journals, setJournals] = useState([]);
-
-  const addJournal = async () => {
-    const { data, error } = await supabase.from("journals").insert({
-      user_id: user?.id,
-      title: journalTitle,
-      color: journalColor,
-      created_at: new Date(),
-    });
-
-    if (error) {
-      console.error("Error adding journal:", error);
-    } else if (data) {
-      setJournals((prevJournals) => [...prevJournals, ...data]);
-      //TODO: add loading while journal is being created?
-    }
-  };
-
+  const [journals, setJournals] = useState<Journal[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   const [isAddingJournal, setIsAddingJournal] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [newJournal, setNewJournal] = useState<Journal>({
+    color: "--var(color-foreground)",
+    title: "Journal",
+  });
+  const [editedJournal, setEditedJournal] = useState<Journal>({
+    color: "--var(color-foreground)",
+    title: "Journal",
+  });
+  const colors = [
+    "#b64754",
+    "#802dce",
+    "#da8550",
+    "#d895d1",
+    "#9cd1f4",
+    "#e9f2c3",
+    "#4c7265",
+    "#353535",
+    "#efefef",
+    "#2d51bb",
+  ];
+
   const handleAddJournal = () => {
-    addJournal();
+    insertRow(
+      "journals",
+      supabase,
+      {
+        user_id: user?.id,
+        title: newJournal.title,
+        color: newJournal.color,
+        created_at: new Date(),
+      },
+      setJournals,
+    );
     setIsAddingJournal(false);
   };
+
+  const handleUpdateJournal = (journalId: string) => {
+    updateRow("journals", journalId, supabase, {
+      title: editedJournal.title,
+      color: editedJournal.color,
+    });
+    setEditingId(null);
+  };
+
+  const handleDeleteJournal = (journalId: string) => {
+    // TODO: dialog window
+    deleteRow("journals", journalId, supabase);
+  };
+
   useEffect(() => {
-    if (!user) return;
-
-    const fetchJournals = async () => {
-      const { data, error } = await supabase.from("journals").select("*");
-
-      if (error) {
-        console.error("Error fetching entry:", error);
-      } else {
-        setJournals(data);
-        console.log(data);
-      }
-    };
-    fetchJournals();
-  }, [user]);
-
-  // const entryContent = truncate(entry.content, 30);
+    fetchRows("journals", supabase, setJournals);
+    fetchRows("journal_entries", supabase, setEntries);
+  }, [user, journals, supabase]);
 
   return (
     <>
@@ -118,29 +155,142 @@ const Dashboard = () => {
           <TabsContent value="journals">
             <Container className="mx-auto max-w-sm">
               <Searchbar placeholder="Search for entry or word" />
-
               <Accordion type="single" collapsible>
-                {journals.map((journal) => (
-                  <AccordionItem key={journal.id} value={journal.id}>
-                    <AccordionTrigger>
-                      <div className="flex items-center gap-1">
-                        <IoMdJournal
-                          size={24}
-                          className="text-accent"
-                          style={{ color: journal.color }}
-                        />
-                        {journal.title}
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex items-center gap-3">
-                        <span>{journal.created_at}</span>
-                        <div className="flex flex-col">
-                          {/* <span>entry.title</span>
-                        <span>truncate(entry.content, 30)</span> */}
+                {journals.map((journal, journalIndex) => (
+                  <AccordionItem
+                    key={journalIndex}
+                    value={editingId !== null ? null : journalIndex.toString()}
+                  >
+                    {editingId === journalIndex ? (
+                      <div className="flex items-center justify-between pt-2">
+                        <div className="flex w-full items-center gap-1">
+                          <Popover>
+                            <PopoverTrigger className="cursor-pointer">
+                              <IoMdJournal
+                                size={24}
+                                style={{ color: editedJournal.color }}
+                                className="text-accent transition duration-300"
+                              />
+                            </PopoverTrigger>
+                            {/* <PopoverContent>
+                        <ColorPicker />
+                      </PopoverContent> */}
+                            <PopoverContent className="grid grid-flow-col grid-rows-2 items-center justify-center gap-4">
+                              {colors.map((color, index) => (
+                                <div
+                                  key={index}
+                                  onClick={() =>
+                                    setEditedJournal((prev) => ({
+                                      ...prev,
+                                      color: color,
+                                    }))
+                                  }
+                                  className={`h-4 w-4 cursor-pointer transition duration-300 hover:scale-110`}
+                                  style={{ backgroundColor: color }}
+                                ></div>
+                              ))}
+                            </PopoverContent>
+                          </Popover>
+                          <input
+                            className="w-full text-sm focus:outline-0"
+                            placeholder="Type in journal title"
+                            onChange={(e) => {
+                              setEditedJournal((prev) => ({
+                                ...prev,
+                                title: e.target.value,
+                              }));
+                            }}
+                          />
                         </div>
+                        <button
+                          className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
+                          type="button"
+                          onClick={() => handleUpdateJournal(journal.id)}
+                        >
+                          <GoCheck />
+                        </button>
+                        <button
+                          type="button"
+                          className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
+                          onClick={() => {
+                            setEditingId(null);
+                            setEditedJournal({
+                              color: "",
+                              title: "Journal",
+                            });
+                          }}
+                        >
+                          <IoCloseOutline />
+                        </button>
                       </div>
-                    </AccordionContent>
+                    ) : (
+                      <>
+                        <AccordionTrigger>
+                          <div className="flex gap-2">
+                            <Link
+                              className="flex items-center gap-1 duration-400 hover:scale-102 hover:cursor-pointer"
+                              href={`dashboard/journal/${journal.id}`}
+                            >
+                              <IoMdJournal
+                                size={24}
+                                className="text-accent"
+                                style={{ color: journal.color }}
+                              />
+
+                              <span>{journal.title}</span>
+                            </Link>
+
+                            {editingId !== null ? null : (
+                              <DropdownMenu>
+                                <DropdownMenuTrigger className="ml-1 flex cursor-pointer items-center gap-2">
+                                  <RxDotsHorizontal size={15} />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="mx-content min-w-36">
+                                  <DropdownMenuLabel>
+                                    <div className="flex items-center gap-2">
+                                      <span>Journal settings</span>
+                                    </div>
+                                  </DropdownMenuLabel>
+                                  <DropdownMenuItem
+                                    onClick={() => setEditingId(journalIndex)}
+                                  >
+                                    <span>Edit</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() =>
+                                      handleDeleteJournal(journal.id)
+                                    }
+                                  >
+                                    <span>Delete</span>
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            )}
+                          </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          {entries
+                            .filter((e) => e.journal_id === journal.id)
+                            .map((entry, entryIndex) => (
+                              <div
+                                key={entryIndex}
+                                className="hover:bg-background/20 flex cursor-pointer items-center justify-between gap-3 rounded-md p-2 transition duration-300"
+                              >
+                                <span>{entry.title}</span>
+                                <span>
+                                  {truncate(entry.created_at, 10, false)}
+                                </span>
+                              </div>
+                            ))}
+                          {entries.filter((e) => e.journal_id === journal.id)
+                            .length === 0 && (
+                            <div className="text-muted-foreground ml-2 text-sm">
+                              No entries yet.
+                            </div>
+                          )}
+                        </AccordionContent>
+                      </>
+                    )}
                   </AccordionItem>
                 ))}
               </Accordion>
@@ -151,95 +301,42 @@ const Dashboard = () => {
                       <PopoverTrigger className="cursor-pointer">
                         <IoMdJournal
                           size={24}
-                          style={{ color: journalColor }}
-                          className="text-accent"
+                          style={{ color: newJournal.color }}
+                          className="text-accent transition duration-300"
                         />
                       </PopoverTrigger>
                       {/* <PopoverContent>
                         <ColorPicker />
                       </PopoverContent> */}
                       <PopoverContent className="grid grid-flow-col grid-rows-2 items-center justify-center gap-4">
-                        <div
-                          onClick={() => setJournalColor("")}
-                          className="bg-accent h-4 w-4 cursor-pointer"
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#87CEFA")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#87CEFA" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#ADFF2F")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#ADFF2F" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#FF69B4")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#FF69B4" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#FFFACD")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#FFFACD" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#FFA07A")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#FFA07A" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#8A2BE2")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#8A2BE2" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#5F9EA0")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#5F9EA0" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#FFD700")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#FFD700" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#DC143C")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#DC143C" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#ffffff")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#ffffff" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#00CED1")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#00CED1" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#FF4500")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#FF4500" }}
-                        ></div>
-                        <div
-                          onClick={() => setJournalColor("#1e2020")}
-                          className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-110"
-                          style={{ backgroundColor: "#1e2020" }}
-                        ></div>
+                        {colors.map((color, index) => (
+                          <div
+                            key={index}
+                            onClick={() =>
+                              setNewJournal((prev) => ({
+                                ...prev,
+                                color: color,
+                              }))
+                            }
+                            className={`h-4 w-4 cursor-pointer transition duration-300 hover:scale-110`}
+                            style={{ backgroundColor: color }}
+                          ></div>
+                        ))}
                       </PopoverContent>
                     </Popover>
                     <input
                       className="w-full text-sm focus:outline-0"
                       placeholder="Type in journal title"
                       onChange={(e) => {
-                        setJournalTitle(e.target.value);
+                        setNewJournal((prev) => ({
+                          ...prev,
+                          title: e.target.value,
+                        }));
                       }}
                     />
                   </div>
                   <button
-                    className="text-muted-foreground cursor-pointer px-2 py-3"
+                    className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
                     type="submit"
                     onClick={handleAddJournal}
                   >
@@ -247,8 +344,14 @@ const Dashboard = () => {
                   </button>
                   <button
                     type="button"
-                    className="text-muted-foreground cursor-pointer py-3 pr-1 pl-2"
-                    onClick={() => setIsAddingJournal(false)}
+                    className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
+                    onClick={() => {
+                      setIsAddingJournal(false);
+                      setNewJournal({
+                        color: "",
+                        title: "Journal",
+                      });
+                    }}
                   >
                     <IoCloseOutline />
                   </button>

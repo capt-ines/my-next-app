@@ -49,21 +49,23 @@ const HamburgerMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const navLinks = pathname.startsWith("/dashboard")
-    ? dashboardNavLinksData.map((link) => (
-        <li key={link.href} className="transition duration-400 hover:scale-110">
-          <Link onClick={toggleMenu} href={link.href}>
-            {link.label}
-          </Link>
-        </li>
-      ))
-    : publicNavLinksData.map((link) => (
-        <li key={link.href} className="transition duration-400 hover:scale-110">
-          <Link onClick={toggleMenu} href={link.href}>
-            {link.label}
-          </Link>
-        </li>
-      ));
+  const navLinks =
+    // pathname.startsWith("/dashboard")
+    //   ?
+    dashboardNavLinksData.map((link) => (
+      <li key={link.href} className="transition duration-400 hover:scale-110">
+        <Link onClick={toggleMenu} href={link.href}>
+          {link.label}
+        </Link>
+      </li>
+    ));
+  // : publicNavLinksData.map((link) => (
+  //     <li key={link.href} className="transition duration-400 hover:scale-110">
+  //       <Link onClick={toggleMenu} href={link.href}>
+  //         {link.label}
+  //       </Link>
+  //     </li>
+  //   ));
 
   return (
     <nav className="z-50">
@@ -110,13 +112,13 @@ const HamburgerMenu = () => {
             </li>
           )}
           {navLinks}
-          {user && pathname.startsWith("/dashboard") ? (
-            <li>
-              <Link onClick={toggleMenu} href={"/dashboard/settings/details"}>
-                Settings
-              </Link>
-            </li>
-          ) : null}
+          {/* {user && pathname.startsWith("/dashboard") ? ( */}
+          <li>
+            <Link onClick={toggleMenu} href={"/dashboard/settings/details"}>
+              Settings
+            </Link>
+          </li>
+          {/* ) : null} */}
         </ul>
       </div>
     </nav>

@@ -34,9 +34,11 @@ const Navbar = () => {
   const { user, username } = useUser();
   const router = useRouter();
 
-  const navLinks = pathname.startsWith("/dashboard")
-    ? dashboardNavLinksData
-    : publicNavLinksData;
+  const navLinks =
+    // pathname.startsWith("/dashboard")
+    //   ? dashboardNavLinksData
+    //   :
+    publicNavLinksData;
 
   return (
     <nav>

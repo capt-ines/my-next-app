@@ -1,5 +1,6 @@
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
+import { truncate } from "@/utils/truncate";
 import { Block } from "@blocknote/core";
 import { en } from "@blocknote/core/locales";
 import { themesData } from "@/constants/themes";
@@ -37,13 +38,16 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useUser } from "@/contexts/userContext";
 import ArrowButton from "./arrowButton";
+import Paragraph from "@tiptap/extension-paragraph";
 
 const Editor = ({
   entryId,
+  journalId,
   isNew = false,
   initialContent,
 }: {
-  entryId?: any;
+  entryId?: string;
+  journalId?: string;
   isNew?: boolean;
   initialContent?: any;
 }) => {
@@ -53,7 +57,7 @@ const Editor = ({
   const options = {
     weekday: "long",
     year: "numeric",
-    month: "numeric",
+    month: "long",
     day: "numeric",
   };
   const today = new Date();
@@ -61,28 +65,17 @@ const Editor = ({
   const journalTemplates = {
     journal: [
       {
-        type: "paragraph",
-        content: today.toLocaleDateString("en-US", options),
-        props: { textColor: "gray" },
-      },
-      {
         type: "heading",
-        content: "Title",
+        content: "",
       },
       {
         type: "paragraph",
-        content:
-          "Think feelingly only of the state you desire to realize. Feeling the reality of the state sought and living and acting on that conviction (the conviction that it is done) is the way of all seeming miracles. All changes of expression are brought about through a change of feeling. A change of feeling is a change of destiny.",
+        content: "",
         id: "entry-block",
         props: { textAlignment: "justify" },
       },
     ],
     gratitudeList: [
-      {
-        type: "paragraph",
-        content: today.toLocaleDateString("en-US", options),
-        props: { textColor: "gray" },
-      },
       {
         type: "heading",
         content: "Gratutude List",
@@ -115,6 +108,9 @@ const Editor = ({
   };
   const [template, setTemplate] = useState(journalTemplates.journal);
   const [blocks, setBlocks] = useState<Block[]>([]);
+  const [journal, setJournal] = useState({});
+  const [entry, setEntry] = useState({});
+  console.log(blocks);
   const { theme } = useThemeContext();
   const darkThemes = themesData.filter((theme) => theme.type === "dark");
 
@@ -133,73 +129,114 @@ const Editor = ({
         bulletListItem: "",
         numberedListItem: "",
         default: "",
+        heading: "Title",
+        paragraph: "Write something...",
       },
     },
   });
 
+  useEffect(() => {
+    if (!journalId) return;
+    const fetchJournal = async () => {
+      const { data, error } = await supabase
+        .from("journals")
+        .select("*")
+        .eq("id", journalId)
+        .single();
+
+      if (error) {
+        console.error("Error fetching journal:", error);
+      } else {
+        setJournal(data);
+      }
+    };
+    const fetchEntry = async () => {
+      if (!entryId) return;
+      const { data, error } = await supabase
+        .from("journal_entries")
+        .select("*")
+        .eq("id", entryId)
+        .single();
+
+      if (error) {
+        console.error("Error fetching entry:", error);
+      } else {
+        setEntry(data);
+      }
+    };
+
+    fetchJournal();
+    fetchEntry();
+  }, [journalId, entryId, supabase]);
+
+  useEffect(() => {
+    console.log(entry);
+  }, [entry]);
+
   return (
     <>
       <div className="flex min-h-screen flex-col rounded-md py-5">
-        <div className="mx-4.5 mb-3">
+        <div className="mx-4.5 md:mx-13.5">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Journals</BreadcrumbLink>
+                <BreadcrumbLink href="/dashboard/">Profile</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Reflections</BreadcrumbPage>
+                <BreadcrumbPage>
+                  <BreadcrumbLink href={`/dashboard/journal/${journalId}`}>
+                    {journal.title}
+                  </BreadcrumbLink>
+                </BreadcrumbPage>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbPage>Title</BreadcrumbPage>
+                <BreadcrumbPage>{entry?.title || "New entry"}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
           <div className="my-3 flex items-center justify-between">
-            <h1 className="font-serif text-lg uppercase sm:text-xl">
-              Reflections
+            <h1 className="text-muted-foreground font-serif text-lg uppercase sm:text-xl">
+              {journal.title}
             </h1>
             <Button
               variant={"ghost"}
               onClick={async () => {
-                if (isNew) {
-                  const { error } = await supabase
-                    .from("journal_entries")
-                    .insert([
-                      {
-                        user_id: user?.id,
-                        title: "My Journal",
-                        content: blocks,
-                      },
-                    ]);
+                const { error } = await supabase
+                  .from("journal_entries")
+                  .update({
+                    content: blocks,
+                    title:
+                      blocks.find(
+                        (item) =>
+                          item.type === "heading" && item.content.length > 0,
+                      )?.content[0].text ||
+                      truncate(
+                        blocks.find((item) => item.content.length > 0)
+                          ?.content[0].text,
+                        12,
+                      ),
+                  })
+                  .eq("id", entryId);
 
-                  if (error) {
-                    console.error("Insert error:", error);
-                  } else {
-                    console.log("Journal entry created!");
-                    // Optionally redirect here
-                  }
+                if (error) {
+                  console.error("Update error:", error);
                 } else {
-                  const { error } = await supabase
-                    .from("journal_entries")
-                    .update({ content: blocks })
-                    .eq("id", entryId);
-
-                  if (error) {
-                    console.error("Update error:", error);
-                  } else {
-                    console.log("Journal entry updated!");
-                  }
+                  console.log("Journal entry updated!");
                 }
               }}
             >
               Save
             </Button>
           </div>
-          <hr className="text-muted-foreground" />
+          <hr className="text-muted-foreground/20" />
+          <h2 className="text-muted-foreground my-2 text-sm">
+            {today.toLocaleDateString("en-US", options)}
+          </h2>
         </div>
         <BlockNoteView
+          className="z-30"
           data-bn-font
           theme={
             darkThemes.some((darkTheme) => darkTheme.key === theme)
@@ -261,9 +298,8 @@ const Editor = ({
             )}
           ></FormattingToolbarController>
         </BlockNoteView>
-        <div className="text-muted-foreground flex w-full items-center justify-end px-4.5">
-          <span className="translate-x-2">Next entry</span>
-          <ArrowButton direction="right" />
+        <div className="my-10 flex w-full items-center justify-end pl-4.5 text-sm md:pr-4.5">
+          <ArrowButton text="Next entry" direction="right" />
         </div>
       </div>
     </>

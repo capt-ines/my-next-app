@@ -351,6 +351,24 @@
   background-color: transparent;
 }
 
+.bn-container[data-bn-font] * {
+  @apply text-sm;
+  @apply 2xl:text-lg;
+}
+.bn-container[data-bn-font] h1 {
+  @apply text-3xl font-semibold;
+}
+.bn-container[data-bn-font] h2 {
+  @apply text-2xl font-semibold;
+}
+.bn-container[data-bn-font] h3 {
+  @apply text-xl font-semibold;
+}
+
+/* .bn-container[data-bn-font] p {
+  text-indent: 1em;
+} */
+
 /* .bn-container[data-bn-theme][data-color-scheme] {
   --bn-colors-menu-text: var(--foreground);
   --bn-colors-menu-background: var(--background);
@@ -399,7 +417,7 @@
     --font-weight-semibold: 300;
     --font-weight-bold: 500;
 
-    --font-serif: "Italiana";
+    --font-serif: "Antic Didone";
     --font-sans: "Nunito";
     --radius: 0.625rem;
 

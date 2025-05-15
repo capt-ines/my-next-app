@@ -4,14 +4,13 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
 // Dynamically load your Editor to avoid SSR issues
-const Editor = dynamic(() => import("../../../components/ui/Editor"), {
+const Editor = dynamic(() => import("@/components/ui/Editor"), {
   ssr: false,
 });
 
 const JournalEntryPage = () => {
   const router = useRouter();
-  const { entryId } = router.query;
-
+  const { journalId, entryId } = router.query;
   const supabase = createClient();
   const [content, setContent] = useState(null);
 
@@ -37,9 +36,13 @@ const JournalEntryPage = () => {
   if (!content) return <div>Loading...</div>;
 
   return (
-    <div>
-      <Editor isNew={false} initialContent={content} entryId={entryId} />
-    </div>
+    <section className="bg-background/90 shadow-lg backdrop-blur-lg md:mx-4.5 md:rounded-md">
+      <Editor
+        initialContent={content}
+        journalId={journalId}
+        entryId={entryId}
+      />
+    </section>
   );
 };
 

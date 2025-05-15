@@ -167,7 +167,7 @@ export const themesData = [
   {
     key: "clairvoyant",
     label: "Clairvoyant",
-    type: "dark",
+    type: "light",
     swatch: "DarkKhaki",
     palette: [
       "#E6E8A3", // Cool muted yellow

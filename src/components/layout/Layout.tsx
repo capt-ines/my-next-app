@@ -8,7 +8,7 @@ import MouseLight from "../ui/MouseLight";
 import { Button } from "../ui/button";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { themesData } from "@/constants/themes";
-import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
 import NavIsland from "../ui/NavIsland";
 
 interface LayoutProps {
@@ -22,9 +22,9 @@ function Layout({ children }: LayoutProps) {
 
   const currentTheme = themesData.find((t) => t.key === theme);
   const currentPalette = currentTheme ? currentTheme.palette : [];
-  const pathname = usePathname();
+  const { pathname } = useRouter();
   const isHome = pathname === "/";
-  const isJournal = pathname.includes("/journal");
+  const isJournal = pathname?.includes("/journal");
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -73,12 +73,12 @@ function Layout({ children }: LayoutProps) {
             <Header />
           </div>
           {isJournal ? (
-            <main className="pt-20 pb-6 sm:pt-26 md:mx-8">
+            <main className="pt-15 pb-0 md:mx-8 md:pt-23 md:pb-10">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>
           ) : (
-            <main className="mx-4.5 pt-20 pb-6 sm:pt-26 md:mx-8">
+            <main className="mx-4.5 pt-15 pb-6 md:mx-8 md:pt-23">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>
