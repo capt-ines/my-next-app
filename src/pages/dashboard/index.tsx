@@ -43,10 +43,27 @@ import {
   insertRow,
 } from "@/utils/auth/fetchData";
 import { GoCheck } from "react-icons/go";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuTrigger,
+} from "@radix-ui/react-context-menu";
+
 interface Entry {
-  id: string;
+  id?: string;
   title: string;
-  created_at: string;
+  created_at?: string;
   journal_id?: string;
 }
 interface Journal {
@@ -59,25 +76,33 @@ const Dashboard = () => {
   const { username, user } = useUser();
   const { theme } = useThemeContext();
   const supabase = createComponentClient();
+  const [dialog, setDialog] = useState({
+    open: false,
+    item: null,
+    warning: "",
+    function: () => {},
+  });
   const [journals, setJournals] = useState<Journal[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
-  const [isAddingJournal, setIsAddingJournal] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingJournalId, setEditingJournalId] = useState<number | null>(null);
+  const [editingEntryId, setEditingEntryId] = useState<number | null>(null);
   const [newJournal, setNewJournal] = useState<Journal>({
-    color: "--var(color-foreground)",
+    color: "var(--accent)",
     title: "Journal",
   });
-  const [editedJournal, setEditedJournal] = useState<Journal>({
-    color: "--var(color-foreground)",
-    title: "Journal",
+  const [newEntry, setNewEntry] = useState<Entry>({
+    title: "Entry",
   });
+  const [editedJournal, setEditedJournal] = useState<Journal>({});
+  const [editedEntry, setEditedEntry] = useState<Journal>({});
   const colors = [
+    "var(--accent)",
     "#b64754",
     "#802dce",
     "#da8550",
     "#d895d1",
     "#9cd1f4",
-    "#e9f2c3",
     "#4c7265",
     "#353535",
     "#efefef",
@@ -96,20 +121,79 @@ const Dashboard = () => {
       },
       setJournals,
     );
-    setIsAddingJournal(false);
+    setIsAdding(false);
   };
 
-  const handleUpdateJournal = (journalId: string) => {
-    updateRow("journals", journalId, supabase, {
+  const handleAddEntry = (journalId) => {
+    insertRow(
+      "journal_entries",
+      supabase,
+      {
+        user_id: user?.id,
+        title: newEntry.title,
+        journal_id: journalId,
+        created_at: new Date(),
+        content: [
+          {
+            id: "ab2ccde4-14b0-43d3-b834-5711a5a80473",
+            type: "paragraph",
+            props: {
+              textColor: "default",
+              backgroundColor: "default",
+              textAlignment: "left",
+            },
+            content: [
+              {
+                type: "text",
+                text: "and me",
+                styles: {},
+              },
+            ],
+            children: [],
+          },
+          {
+            id: "304e1da9-56af-4b64-b2db-f3ae6f6218a3",
+            type: "paragraph",
+            props: {
+              textColor: "default",
+              backgroundColor: "default",
+              textAlignment: "left",
+            },
+            content: [],
+            children: [],
+          },
+        ],
+      },
+      setEntries,
+    );
+    setIsAdding(false);
+    // router.push(`/dashboard/journal/${journalId}/${data?.id}`);
+  };
+
+  const handleUpdateJournal = (journal: object) => {
+    updateRow("journals", journal.id, supabase, {
       title: editedJournal.title,
       color: editedJournal.color,
     });
-    setEditingId(null);
+    setEditingJournalId(null);
+    setEditedJournal({});
+  };
+  const handleUpdateEntry = (entry: object) => {
+    updateRow("journal_entries", entry.id, supabase, {
+      title: editedEntry.title,
+      created_at: editedEntry.created_at,
+    });
+    setEditingEntryId(null);
+    setEditedEntry({});
   };
 
   const handleDeleteJournal = (journalId: string) => {
     // TODO: dialog window
     deleteRow("journals", journalId, supabase);
+  };
+
+  const handleDeleteEntry = (entryId: string) => {
+    deleteRow("journal_entries", entryId, supabase);
   };
 
   useEffect(() => {
@@ -140,7 +224,27 @@ const Dashboard = () => {
         <h1 className="mt-5">{username}</h1>
       </div>
 
-      <section>
+      <section className="relative">
+        {dialog.open ? (
+          <Container className="absolute top-1/2 z-50 mx-5 flex flex-col justify-center gap-1 text-center md:mx-50">
+            <h3> Are you sure?</h3>
+            <p>{dialog.warning}</p>
+            <div className="mt-2 flex justify-center gap-2">
+              <Button
+                onClick={() => {
+                  dialog.function(dialog.item.id);
+                  setDialog({ open: false, item: null });
+                }}
+                variant={"destructive"}
+              >
+                Delete
+              </Button>
+              <Button onClick={() => setDialog({ open: false, item: null })}>
+                Cancel
+              </Button>
+            </div>
+          </Container>
+        ) : null}
         <Tabs defaultValue="soulscapes">
           <TabsList className="aero mx-auto grid h-20 w-fit grid-flow-col grid-rows-2 min-[500px]:flex min-[500px]:h-auto">
             <TabsTrigger className="col-span-2" value="soulscapes">
@@ -159,9 +263,11 @@ const Dashboard = () => {
                 {journals.map((journal, journalIndex) => (
                   <AccordionItem
                     key={journalIndex}
-                    value={editingId !== null ? null : journalIndex.toString()}
+                    value={
+                      editingJournalId !== null ? null : journalIndex.toString()
+                    }
                   >
-                    {editingId === journalIndex ? (
+                    {editingJournalId === journalIndex ? (
                       <div className="flex items-center justify-between pt-2">
                         <div className="flex w-full items-center gap-1">
                           <Popover>
@@ -169,7 +275,7 @@ const Dashboard = () => {
                               <IoMdJournal
                                 size={24}
                                 style={{ color: editedJournal.color }}
-                                className="text-accent transition duration-300"
+                                className="transition duration-300"
                               />
                             </PopoverTrigger>
                             {/* <PopoverContent>
@@ -205,7 +311,7 @@ const Dashboard = () => {
                         <button
                           className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
                           type="button"
-                          onClick={() => handleUpdateJournal(journal.id)}
+                          onClick={() => handleUpdateJournal(journal)}
                         >
                           <GoCheck />
                         </button>
@@ -213,10 +319,10 @@ const Dashboard = () => {
                           type="button"
                           className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
                           onClick={() => {
-                            setEditingId(null);
+                            setEditingJournalId(null);
                             setEditedJournal({
-                              color: "",
-                              title: "Journal",
+                              color: journal.color,
+                              title: journal.title,
                             });
                           }}
                         >
@@ -240,61 +346,214 @@ const Dashboard = () => {
                               <span>{journal.title}</span>
                             </Link>
 
-                            {editingId !== null ? null : (
-                              <DropdownMenu>
-                                <DropdownMenuTrigger className="ml-1 flex cursor-pointer items-center gap-2">
-                                  <RxDotsHorizontal size={15} />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="mx-content min-w-36">
-                                  <DropdownMenuLabel>
-                                    <div className="flex items-center gap-2">
-                                      <span>Journal settings</span>
-                                    </div>
-                                  </DropdownMenuLabel>
-                                  <DropdownMenuItem
-                                    onClick={() => setEditingId(journalIndex)}
-                                  >
-                                    <span>Edit</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    onClick={() =>
-                                      handleDeleteJournal(journal.id)
-                                    }
-                                  >
-                                    <span>Delete</span>
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                            {editingJournalId !== null ? null : (
+                              <>
+                                {/* <Dialog>
+                                  <ContextMenu>
+                                    <ContextMenuTrigger className="ml-1 flex cursor-pointer items-center gap-2">
+                                      <RxDotsHorizontal size={15} />
+                                    </ContextMenuTrigger>
+                                    <ContextMenuContent className="mx-content min-w-36">
+                                      <ContextMenuLabel>
+                                        Journal settings
+                                      </ContextMenuLabel>
+                                      <ContextMenuItem  onClick={() => {
+                                        setEditedJournal({
+                                          title: journal.title,
+                                          color: journal.color,
+                                        });
+                                        setEditingJournalId(journalIndex);
+                                      }}>Edit</ContextMenuItem>
+                                      <ContextMenuItem>
+                                        Download
+                                      </ContextMenuItem>
+                                      <DialogTrigger asChild>
+                                        <ContextMenuItem>
+                                          <span>Delete</span>
+                                        </ContextMenuItem>
+                                      </DialogTrigger>
+                                    </ContextMenuContent>
+                                  </ContextMenu>
+                                  <DialogContent>
+                                    <DialogHeader>
+                                      <DialogTitle>
+                                        Are you absolutely sure?
+                                      </DialogTitle>
+                                      <DialogDescription>
+                                        This action cannot be undone. Are you
+                                        sure you want to permanently delete this
+                                        file from our servers?
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter>
+                                      <Button type="submit">Confirm</Button>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </Dialog> */}
+
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger className="ml-1 flex cursor-pointer items-center gap-2">
+                                    <RxDotsHorizontal size={15} />
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent className="mx-content min-w-36">
+                                    <DropdownMenuLabel>
+                                      Journal settings
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuItem
+                                      onClick={() => {
+                                        setEditedJournal({
+                                          title: journal.title,
+                                          color: journal.color,
+                                        });
+                                        setEditingJournalId(journalIndex);
+                                      }}
+                                    >
+                                      Edit
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() =>
+                                        setDialog({
+                                          open: true,
+                                          warning:
+                                            "Deleting a journal will also delete all of its entries.",
+                                          function: handleDeleteJournal,
+                                          item: journal,
+                                        })
+                                      }
+                                    >
+                                      Delete
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </>
                             )}
                           </div>
                         </AccordionTrigger>
                         <AccordionContent>
+                          <Dialog>
+                            <DialogTrigger className="w-full">
+                              <button className="text-muted-foreground hover:bg-background/20 flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-2 pr-4 italic transition duration-300">
+                                <IoAdd />
+                                Add entry
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Add new entry</DialogTitle>
+                                <DialogDescription>
+                                  Choose a template:
+                                </DialogDescription>
+                              </DialogHeader>
+                              <Button
+                                variant={"secondary"}
+                                onClick={() => {
+                                  handleAddEntry(journal.id);
+                                }}
+                              >
+                                Add
+                              </Button>
+                            </DialogContent>
+                          </Dialog>
+
                           {entries
                             .filter((e) => e.journal_id === journal.id)
-                            .map((entry, entryIndex) => (
-                              <div
-                                key={entryIndex}
-                                className="hover:bg-background/20 flex cursor-pointer items-center justify-between gap-3 rounded-md p-2 transition duration-300"
-                              >
-                                <span>{entry.title}</span>
-                                <span>
-                                  {truncate(entry.created_at, 10, false)}
-                                </span>
-                              </div>
-                            ))}
-                          {entries.filter((e) => e.journal_id === journal.id)
+                            .map((entry, entryIndex) =>
+                              editingEntryId === entryIndex ? (
+                                <div
+                                  key={entryIndex}
+                                  className="mx-2 flex items-center gap-2"
+                                >
+                                  <input
+                                    className="w-full text-sm focus:outline-0"
+                                    placeholder="Type in entry title"
+                                    onChange={(e) => {
+                                      setEditedEntry((prev) => ({
+                                        ...prev,
+                                        title: e.target.value,
+                                      }));
+                                    }}
+                                  />
+                                  <button
+                                    className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
+                                    type="button"
+                                    onClick={() => handleUpdateEntry(entry)}
+                                  >
+                                    <GoCheck />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
+                                    onClick={() => {
+                                      setEditingEntryId(null);
+                                      setEditedEntry({
+                                        title: entry.title,
+                                        created_at: entry.created_at,
+                                      });
+                                    }}
+                                  >
+                                    <IoCloseOutline />
+                                  </button>
+                                </div>
+                              ) : (
+                                <Link
+                                  href={`/dashboard/journal/${journal.id}/${entry.id}`}
+                                  key={entryIndex}
+                                  className="group hover:bg-background/20 flex cursor-pointer items-center justify-between gap-3 rounded-md p-2 transition duration-300"
+                                >
+                                  <div className="flex items-start gap-1">
+                                    <span>{entry.title}</span>
+                                    {editingJournalId !== null ? null : (
+                                      <DropdownMenu>
+                                        <DropdownMenuTrigger className="group-hover:text-foreground flex h-full cursor-pointer items-center gap-2 px-2 pt-0.5 text-transparent transition duration-300">
+                                          <RxDotsHorizontal size={15} />
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent className="mx-content min-w-36">
+                                          <DropdownMenuLabel>
+                                            <div className="flex items-center gap-2">
+                                              <span>Entry settings</span>
+                                            </div>
+                                          </DropdownMenuLabel>
+                                          <DropdownMenuItem
+                                            onClick={() => {
+                                              setEditedEntry({
+                                                title: entry.title,
+                                                created_at: entry.created_at,
+                                              });
+                                              setEditingEntryId(entryIndex);
+                                            }}
+                                          >
+                                            <span>Edit</span>
+                                          </DropdownMenuItem>
+                                          <DropdownMenuItem
+                                            onClick={() =>
+                                              handleDeleteEntry(entry.id)
+                                            }
+                                          >
+                                            <span>Delete</span>
+                                          </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                      </DropdownMenu>
+                                    )}
+                                  </div>
+                                  <span>
+                                    {truncate(entry.created_at, 10, false)}
+                                  </span>
+                                </Link>
+                              ),
+                            )}
+                          {/* {entries.filter((e) => e.journal_id === journal.id)
                             .length === 0 && (
                             <div className="text-muted-foreground ml-2 text-sm">
                               No entries yet.
                             </div>
-                          )}
+                          )} */}
                         </AccordionContent>
                       </>
                     )}
                   </AccordionItem>
                 ))}
               </Accordion>
-              {isAddingJournal ? (
+              {isAdding ? (
                 <div className="flex items-center justify-between pt-2">
                   <div className="flex w-full items-center gap-1">
                     <Popover>
@@ -346,7 +605,7 @@ const Dashboard = () => {
                     type="button"
                     className="text-muted-foreground hover:bg-muted/10 my-1 cursor-pointer rounded-sm px-2 py-2 transition duration-300"
                     onClick={() => {
-                      setIsAddingJournal(false);
+                      setIsAdding(false);
                       setNewJournal({
                         color: "",
                         title: "Journal",
@@ -360,9 +619,10 @@ const Dashboard = () => {
                 <Button
                   variant={"ghost"}
                   className="mt-3 h-9 w-full"
-                  onClick={() => setIsAddingJournal(true)}
+                  onClick={() => setIsAdding(true)}
                 >
                   <IoAdd />
+                  Add journal
                 </Button>
               )}
             </Container>

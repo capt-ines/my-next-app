@@ -73,12 +73,12 @@ function Layout({ children }: LayoutProps) {
             <Header />
           </div>
           {isJournal ? (
-            <main className="pt-15 pb-0 md:mx-8 md:pt-23 md:pb-10">
+            <main className="pt-18 pb-0 md:mx-8 md:pt-20 md:pb-10">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>
           ) : (
-            <main className="mx-4.5 pt-15 pb-6 md:mx-8 md:pt-23">
+            <main className="mx-4.5 pt-18 pb-6 md:mx-8 md:pt-20">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>
