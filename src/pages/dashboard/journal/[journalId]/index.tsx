@@ -1,4 +1,5 @@
 import React from "react";
+import { dateFormatter } from "@/utils/dateFormatter";
 import {
   updateRow,
   fetchSingleRow,
@@ -50,10 +51,10 @@ import {
 } from "@/components/ui/accordion";
 import { useUser } from "@/contexts/userContext";
 import Container from "@/components/ui/Container";
-import { truncate } from "@/utils/truncate";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Ghost } from "lucide-react";
+import { today } from "@/utils/today";
 interface Journal {
   color: string;
   title: string;
@@ -81,6 +82,8 @@ const Journals = () => {
     setIsEditing(false);
   };
 
+  const [processedEntries, setProcessedEntries] = useState([]);
+
   useEffect(() => {
     if (!journalId) return;
 
@@ -92,7 +95,24 @@ const Journals = () => {
       "journal_id",
       journalId,
     );
-  }, [journalId, user, supabase]);
+  }, [journalId, supabase]);
+
+  useEffect(() => {
+    if (!entries?.length) return;
+    const processed = entries.map((entry) => {
+      const allTexts = extractTexts(entry.content);
+      const title = allTexts[0] || "";
+      const text = allTexts.slice(1);
+
+      return {
+        ...entry,
+        title,
+        text,
+      };
+    });
+
+    setProcessedEntries(processed);
+  }, [entries]);
 
   const handleAddEntry = async () => {
     const { data, error } = await supabase
@@ -114,7 +134,7 @@ const Journals = () => {
               content: [
                 {
                   type: "text",
-                  text: "and me",
+                  text: "Text",
                   styles: {},
                 },
               ],
@@ -146,6 +166,33 @@ const Journals = () => {
   const handleDeleteEntry = (entryId: string) => {
     deleteRow("journal_entries", entryId, supabase);
   };
+
+  function extractTexts(content) {
+    const result = [];
+
+    function traverse(node) {
+      if (Array.isArray(node)) {
+        node.forEach(traverse);
+      }
+
+      // If it's an object, check its keys
+      else if (typeof node === "object" && node !== null) {
+        if (node.type === "text" && typeof node.text === "string") {
+          result.push(node.text);
+        }
+
+        // Traverse "content" and "children" keys if present
+        if (node.content) traverse(node.content);
+        if (node.children) traverse(node.children);
+      }
+    }
+
+    traverse(content);
+    return result;
+  }
+
+  // entry.content.find((item) => item.type !== "heading")
+  //   ?.content[0]?.text || "Write something..."
 
   const handleDeleteJournal = () => {
     // TODO: dialog window
@@ -265,51 +312,57 @@ const Journals = () => {
         </Button>
 
         <hr className="text-muted-foreground/50" />
-        {entries.map((entry, id) => (
+        {processedEntries.map((entry, id) => (
           <>
             <div
-              className="hover:bg-background/10 flex items-start justify-between rounded-md px-4.5 py-3 transition duration-300 hover:cursor-pointer"
+              className="hover:bg-background/10 rounded-md px-4.5 py-3 transition duration-300 hover:cursor-pointer"
               key={id}
             >
+              <div className="flex items-start justify-between">
+                <Link
+                  className="flex w-full flex-col items-start text-left"
+                  href={`/dashboard/journal/${journalId}/${entry.id}`}
+                >
+                  <span className="max-w-full text-sm wrap-break-word">
+                    {entry.title}
+                  </span>
+                  <span className="mt-1 text-[10px] sm:text-xs">
+                    {dateFormatter(entry.created_at, "long")}
+                  </span>
+                </Link>
+                {isEditing ? (
+                  <Checkbox className="pl-5" />
+                ) : (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2 pl-5">
+                      <RxDotsHorizontal size={20} />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="mx-content min-w-36">
+                      <DropdownMenuItem className="">Move</DropdownMenuItem>
+
+                      <DropdownMenuItem
+                        onClick={() => handleDeleteEntry(entry.id)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )}
+              </div>
               <Link
                 className="w-full"
                 href={`/dashboard/journal/${journalId}/${entry.id}`}
               >
-                <div className="flex items-start justify-between gap-2 md:gap-4">
-                  <div className="flex w-1/3 flex-col items-start text-left">
-                    <span className="max-w-full wrap-break-word">
-                      {entry.title}
-                    </span>
-                    <span className="mt-1 text-[10px] sm:text-xs">
-                      {truncate(entry.created_at, 10, false)}
-                    </span>
-                  </div>
-                  <div className="max-h-12 w-2/3 overflow-hidden text-left">
+                <div>
+                  <div className="max-h-25 overflow-hidden text-justify">
                     <span className="text-foreground/60 text-xs wrap-break-word">
-                      {entry.content.find((item) => item.type !== "heading")
-                        ?.content[0]?.text || "Write something..."}
+                      {entry.text.length < 1
+                        ? "Write something..."
+                        : entry.text}
                     </span>
                   </div>
                 </div>
               </Link>
-              {isEditing ? (
-                <Checkbox className="pl-5" />
-              ) : (
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2 pl-5">
-                    <RxDotsHorizontal size={20} />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mx-content min-w-36">
-                    <DropdownMenuItem className="">Move</DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      onClick={() => handleDeleteEntry(entry.id)}
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
             </div>
             {id !== entries.length - 1 && (
               <hr className="text-muted-foreground/50" />

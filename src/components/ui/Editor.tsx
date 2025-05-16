@@ -1,4 +1,5 @@
 import "@blocknote/core/fonts/inter.css";
+import { today } from "@/utils/today";
 import "@blocknote/mantine/style.css";
 import { truncate } from "@/utils/truncate";
 import { Block } from "@blocknote/core";
@@ -39,6 +40,7 @@ import {
 import { useUser } from "@/contexts/userContext";
 import ArrowButton from "./arrowButton";
 import Paragraph from "@tiptap/extension-paragraph";
+import { dateFormatter } from "@/utils/dateFormatter";
 
 const Editor = ({
   entryId,
@@ -54,13 +56,6 @@ const Editor = ({
   const supabase = createClient();
   const { user } = useUser();
   const locale = en;
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const today = new Date();
 
   const journalTemplates = {
     journal: [
@@ -232,7 +227,7 @@ const Editor = ({
           </div>
           <hr className="text-muted-foreground/20" />
           <h2 className="text-muted-foreground my-2 text-sm">
-            {today.toLocaleDateString("en-US", options)}
+            {dateFormatter(entry.created_at, "long")}
           </h2>
         </div>
         <BlockNoteView

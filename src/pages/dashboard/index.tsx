@@ -59,6 +59,8 @@ import {
   ContextMenuLabel,
   ContextMenuTrigger,
 } from "@radix-ui/react-context-menu";
+import { today } from "@/utils/today";
+import { dateFormatter } from "@/utils/dateFormatter";
 
 interface Entry {
   id?: string;
@@ -117,7 +119,6 @@ const Dashboard = () => {
         user_id: user?.id,
         title: newJournal.title,
         color: newJournal.color,
-        created_at: new Date(),
       },
       setJournals,
     );
@@ -132,7 +133,6 @@ const Dashboard = () => {
         user_id: user?.id,
         title: newEntry.title,
         journal_id: journalId,
-        created_at: new Date(),
         content: [
           {
             id: "ab2ccde4-14b0-43d3-b834-5711a5a80473",
@@ -231,7 +231,8 @@ const Dashboard = () => {
             <p>{dialog.warning}</p>
             <div className="mt-2 flex justify-center gap-2">
               <Button
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   dialog.function(dialog.item.id);
                   setDialog({ open: false, item: null });
                 }}
@@ -400,7 +401,8 @@ const Dashboard = () => {
                                       Journal settings
                                     </DropdownMenuLabel>
                                     <DropdownMenuItem
-                                      onClick={() => {
+                                      onClick={(e) => {
+                                        e.stopPropagation();
                                         setEditedJournal({
                                           title: journal.title,
                                           color: journal.color,
@@ -411,15 +413,16 @@ const Dashboard = () => {
                                       Edit
                                     </DropdownMenuItem>
                                     <DropdownMenuItem
-                                      onClick={() =>
+                                      onClick={(e) => {
+                                        e.stopPropagation();
                                         setDialog({
                                           open: true,
                                           warning:
                                             "Deleting a journal will also delete all of its entries.",
                                           function: handleDeleteJournal,
                                           item: journal,
-                                        })
-                                      }
+                                        });
+                                      }}
                                     >
                                       Delete
                                     </DropdownMenuItem>
@@ -514,7 +517,8 @@ const Dashboard = () => {
                                             </div>
                                           </DropdownMenuLabel>
                                           <DropdownMenuItem
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                              e.stopPropagation();
                                               setEditedEntry({
                                                 title: entry.title,
                                                 created_at: entry.created_at,
@@ -525,9 +529,10 @@ const Dashboard = () => {
                                             <span>Edit</span>
                                           </DropdownMenuItem>
                                           <DropdownMenuItem
-                                            onClick={() =>
-                                              handleDeleteEntry(entry.id)
-                                            }
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleDeleteEntry(entry.id);
+                                            }}
                                           >
                                             <span>Delete</span>
                                           </DropdownMenuItem>
@@ -535,8 +540,8 @@ const Dashboard = () => {
                                       </DropdownMenu>
                                     )}
                                   </div>
-                                  <span>
-                                    {truncate(entry.created_at, 10, false)}
+                                  <span className="text-right whitespace-nowrap">
+                                    {dateFormatter(entry.created_at)}
                                   </span>
                                 </Link>
                               ),
