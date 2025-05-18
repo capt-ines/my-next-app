@@ -1,20 +1,27 @@
-import "@blocknote/core/fonts/inter.css";
-import { today } from "@/utils/today";
-import "@blocknote/mantine/style.css";
-import { truncate } from "@/utils/truncate";
-import { Block } from "@blocknote/core";
-import { en } from "@blocknote/core/locales";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import { themesData } from "@/constants/themes";
 import { useThemeContext } from "@/contexts/themeContext";
-import { useEffect, useState } from "react";
-import { useCreateBlockNote } from "@blocknote/react";
+import { useUser } from "@/contexts/userContext";
+import { dateFormatter } from "@/utils/dateFormatter";
 import { createClient } from "@/utils/supabase/component";
+import { truncate } from "@/utils/truncate";
+import { Block } from "@blocknote/core";
+import "@blocknote/core/fonts/inter.css";
+import { en } from "@blocknote/core/locales";
 import {
   BlockNoteView,
-  Theme,
   darkDefaultTheme,
   lightDefaultTheme,
 } from "@blocknote/mantine";
+import "@blocknote/mantine/style.css";
 import {
   BasicTextStyleButton,
   BlockTypeSelect,
@@ -27,20 +34,11 @@ import {
   NestBlockButton,
   TextAlignButton,
   UnnestBlockButton,
+  useCreateBlockNote,
 } from "@blocknote/react";
-import { Button } from "./button";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { useUser } from "@/contexts/userContext";
+import { useEffect, useState } from "react";
 import ArrowButton from "./arrowButton";
-import Paragraph from "@tiptap/extension-paragraph";
-import { dateFormatter } from "@/utils/dateFormatter";
+import { Button } from "./button";
 
 const Editor = ({
   entryId,
@@ -105,7 +103,6 @@ const Editor = ({
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [journal, setJournal] = useState({});
   const [entry, setEntry] = useState({});
-  console.log(blocks);
   const { theme } = useThemeContext();
   const darkThemes = themesData.filter((theme) => theme.type === "dark");
 
@@ -164,15 +161,13 @@ const Editor = ({
     fetchEntry();
   }, [journalId, entryId, supabase]);
 
-  useEffect(() => {
-    console.log(entry);
-  }, [entry]);
+  useEffect(() => {}, [entry]);
 
   return (
     <>
-      <div className="flex min-h-screen flex-col rounded-md py-5">
-        <div className="mx-4.5 md:mx-13.5">
-          <Breadcrumb>
+      <div className="flex min-h-screen flex-col rounded-lg py-5">
+        <div className="mx-8 md:mx-13.5">
+          {/* <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/dashboard/">Profile</BreadcrumbLink>
@@ -190,12 +185,14 @@ const Editor = ({
                 <BreadcrumbPage>{entry?.title || "New entry"}</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
-          </Breadcrumb>
-          <div className="my-3 flex items-center justify-between">
-            <h1 className="text-muted-foreground font-serif text-lg uppercase sm:text-xl">
-              {journal.title}
-            </h1>
-            <Button
+          </Breadcrumb> */}
+          <div className="mt-3 flex items-center justify-between">
+            <Link href={`/dashboard/journal/${journal.id}`}>
+              <h1 className="text-muted-foreground font-serif text-lg uppercase hover:underline sm:text-xl">
+                {journal.title}
+              </h1>
+            </Link>
+            {/* <Button
               variant={"ghost"}
               onClick={async () => {
                 const { error } = await supabase
@@ -223,12 +220,13 @@ const Editor = ({
               }}
             >
               Save
-            </Button>
+            </Button> */}
+            {/* TODO: save on change and debounce */}
           </div>
-          <hr className="text-muted-foreground/20" />
-          <h2 className="text-muted-foreground my-2 text-sm">
+          <h2 className="text-muted-foreground/70 text-sm">
             {dateFormatter(entry.created_at, "long")}
           </h2>
+          <hr className="text-muted-foreground/20 my-5" />
         </div>
         <BlockNoteView
           className="z-30"

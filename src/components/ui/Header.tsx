@@ -1,56 +1,43 @@
-import React from "react";
 // import Logo from "../../../public/logospiral";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import clsx from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/router";
+import { PiSpiralFill } from "react-icons/pi";
 import HamburgerMenu from "./HamburgerMenu";
 import Navbar from "./Navbar";
-import { PiSpiralFill } from "react-icons/pi";
-import Link from "next/link";
-import useMediaQuery from "@/hooks/useMediaQuery";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import { CiSettings } from "react-icons/ci";
-import { useRouter } from "next/router";
-import { SignOut } from "@supabase/supabase-js";
-import { GrNext } from "react-icons/gr";
-import { PiDoorOpenThin } from "react-icons/pi";
-import ArrowButton from "@/components/ui/arrowButton";
-import { RxDotsHorizontal } from "react-icons/rx";
-import { signOut } from "@/utils/auth/signOut";
-import { PiNutThin } from "react-icons/pi";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuPortal,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useUser } from "@/contexts/userContext";
 
 const Header = () => {
-  const router = useRouter();
-  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const { user } = useUser();
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   const pathname = usePathname();
   const isIndex = pathname === "/";
   // const isDashboard = pathname.startsWith("/dashboard");
   const color = isIndex ? "white" : "foreground";
-
+  const colorVariants = {
+    white: "text-white",
+    foreground: "text-foreground",
+  };
+  // TODO: if is workspace, return hamburger or side bar
   return (
     <header
       className={clsx(
-        "blur-gradient fixed z-[20] flex w-full items-center justify-between px-4.5 pt-2 pb-5 md:px-6 md:pt-3",
+        "blur-gradient fixed z-[20] flex w-full items-center justify-center px-6 pt-3 pb-20 md:px-13 md:pt-9 md:pb-18",
       )}
     >
-      <Link href="/">
-        <div className="my-2 flex items-center gap-0.5">
-          <h1 translate="no" className={`text-${color} text-logo`}>
+      <Link href={user ? "/explore" : "/"}>
+        <div className="group absolute top-5 left-8 my-2 flex items-center gap-0.5 md:top-6.5 md:left-13">
+          <h1
+            translate="no"
+            className={`${colorVariants[color]} text-logo hidden md:block`}
+          >
             soulscape
           </h1>
           <PiSpiralFill
             size={20}
-            className={`text-${color} animate-quickspin`}
+            className={`${colorVariants[color]} animate-quickspin my-1 scale-130 md:my-0 md:scale-100`}
           />
         </div>
       </Link>

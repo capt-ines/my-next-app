@@ -1,18 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import type { GetServerSidePropsContext } from "next";
-import { createClient } from "@/utils/supabase/server-props";
-import { createClient as createComponentClient } from "@/utils/supabase/component";
-import { useRouter } from "next/router";
-import { useUser } from "@/contexts/userContext";
-import Container from "@/components/ui/Container";
-import { useThemeContext } from "@/contexts/themeContext";
-import clsx from "clsx";
-import { themesData } from "@/constants/themes";
-import { SignOut } from "@supabase/supabase-js";
 import ArrowButton from "@/components/ui/arrowButton";
-import { Button } from "@/components/ui/button";
-import { GrCheckmark } from "react-icons/gr";
-import { createClient as ComponentClient } from "@/utils/supabase/component";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,6 +7,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { themesData } from "@/constants/themes";
+import { useThemeContext } from "@/contexts/themeContext";
+import { useUser } from "@/contexts/userContext";
+import { createClient as ComponentClient } from "@/utils/supabase/component";
+import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 
 const Aura = () => {
   const { username, user } = useUser();
@@ -109,7 +101,7 @@ const Aura = () => {
 
   return (
     <>
-      <Breadcrumb className="mb-5">
+      <Breadcrumb className="mb-4 md:mb-6">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink href="/dashboard">Profile</BreadcrumbLink>
@@ -124,7 +116,7 @@ const Aura = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <section className="flex flex-col-reverse items-center justify-center gap-5 md:flex-row md:gap-2 lg:gap-20 2xl:gap-30">
+      <section className="mb-30 flex flex-col-reverse items-center justify-center gap-5 md:flex-row md:gap-2 lg:gap-20 2xl:gap-30">
         <div className="flex flex-col items-center gap-1">
           <div className="md:hidden">
             <ArrowButton

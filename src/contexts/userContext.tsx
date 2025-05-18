@@ -59,3 +59,5 @@ const Provider: React.FC<ProviderProps> = ({
 
 export const useUser = () => useContext(Context);
 export default Provider;
+
+// TODO: SWR albo debounce albo optimitic update albo zapytac chat gpt

@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-background/20 border-foreground/20 flex items-end gap-4 border-t px-6 pt-5 pb-20 text-sm">
+    <footer className="bg-background/50 border-foreground/20 flex items-end gap-4 border-t px-8 pt-7 pb-20 text-sm">
       <span translate="no" className="link text-foreground">
-        © 2025 Soulscape
+        © {new Date().getFullYear()} Soulscape
       </span>
       <span className="link text-foreground">Privacy & terms</span>
     </footer>

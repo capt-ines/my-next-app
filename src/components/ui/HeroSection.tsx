@@ -62,6 +62,7 @@ const HeroSection = () => {
               </p>
 
               <Button
+                variant={"secondary"}
                 onClick={() =>
                   handlePingAndRedirect(user ? "/explore" : "/register")
                 }

@@ -91,7 +91,7 @@ export const themesData = [
   {
     key: "guide",
     label: "Guide",
-    type: "light",
+    type: "dark",
     swatch: "Salmon",
     palette: [
       "#FF8A80",

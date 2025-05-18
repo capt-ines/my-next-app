@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { RxDotsHorizontal } from "react-icons/rx";
+import Container from "@/components/ui/Container";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import "@rc-component/color-picker/assets/index.css";
-import type { GetServerSidePropsContext } from "next";
-import { createClient } from "@/utils/supabase/server-props";
-import { createClient as createComponentClient } from "@/utils/supabase/component";
-import { useUser } from "@/contexts/userContext";
-import Container from "@/components/ui/Container";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-import { truncate } from "@/utils/truncate";
-import { IoAdd } from "react-icons/io5";
-import { IoCloseOutline } from "react-icons/io5";
-import { useThemeContext } from "@/contexts/themeContext";
-import { IoMdJournal } from "react-icons/io";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import clsx from "clsx";
-import Link from "next/link";
+import { useUser } from "@/contexts/userContext";
+import { createClient as createComponentClient } from "@/utils/supabase/component";
+import { createClient } from "@/utils/supabase/server-props";
+import "@rc-component/color-picker/assets/index.css";
+import type { GetServerSidePropsContext } from "next";
+import { useEffect, useState } from "react";
+import { RxDotsHorizontal } from "react-icons/rx";
 import Searchbar from "@/components/ui/Searchbar";
 import {
   Accordion,
@@ -37,30 +27,27 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
-  deleteRow,
-  updateRow,
-  fetchRows,
-  insertRow,
-} from "@/utils/auth/fetchData";
-import { GoCheck } from "react-icons/go";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useThemeContext } from "@/contexts/themeContext";
 import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuLabel,
-  ContextMenuTrigger,
-} from "@radix-ui/react-context-menu";
-import { today } from "@/utils/today";
+  deleteRow,
+  fetchRows,
+  insertRow,
+  updateRow,
+} from "@/utils/auth/fetchData";
 import { dateFormatter } from "@/utils/dateFormatter";
+import clsx from "clsx";
+import Link from "next/link";
+import { GoCheck } from "react-icons/go";
+import { IoMdJournal } from "react-icons/io";
+import { IoAdd, IoCloseOutline } from "react-icons/io5";
 
 interface Entry {
   id?: string;
@@ -96,8 +83,8 @@ const Dashboard = () => {
   const [newEntry, setNewEntry] = useState<Entry>({
     title: "Entry",
   });
-  const [editedJournal, setEditedJournal] = useState<Journal>({});
-  const [editedEntry, setEditedEntry] = useState<Journal>({});
+  const [editedJournal, setEditedJournal] = useState<Journal | object>({});
+  const [editedEntry, setEditedEntry] = useState<Journal | object>({});
   const colors = [
     "var(--accent)",
     "#b64754",
@@ -167,6 +154,7 @@ const Dashboard = () => {
       setEntries,
     );
     setIsAdding(false);
+    // TODO: revalidate(), optimistic update
     // router.push(`/dashboard/journal/${journalId}/${data?.id}`);
   };
 
@@ -188,7 +176,6 @@ const Dashboard = () => {
   };
 
   const handleDeleteJournal = (journalId: string) => {
-    // TODO: dialog window
     deleteRow("journals", journalId, supabase);
   };
 
@@ -203,7 +190,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="my-2 flex w-full flex-col items-center">
+      <div className="my-6 flex w-full flex-col items-center">
         <div
           style={{ willChange: "transform" }}
           className={clsx(
@@ -226,7 +213,7 @@ const Dashboard = () => {
 
       <section className="relative">
         {dialog.open ? (
-          <Container className="absolute top-1/2 z-50 mx-5 flex flex-col justify-center gap-1 text-center md:mx-50">
+          <div className="bg-mask/40 fixed inset-0 z-50 flex flex-col items-center justify-center gap-1 text-center backdrop-blur-md">
             <h3> Are you sure?</h3>
             <p>{dialog.warning}</p>
             <div className="mt-2 flex justify-center gap-2">
@@ -244,7 +231,7 @@ const Dashboard = () => {
                 Cancel
               </Button>
             </div>
-          </Container>
+          </div>
         ) : null}
         <Tabs defaultValue="soulscapes">
           <TabsList className="aero mx-auto grid h-20 w-fit grid-flow-col grid-rows-2 min-[500px]:flex min-[500px]:h-auto">
@@ -501,7 +488,7 @@ const Dashboard = () => {
                                 <Link
                                   href={`/dashboard/journal/${journal.id}/${entry.id}`}
                                   key={entryIndex}
-                                  className="group hover:bg-background/20 flex cursor-pointer items-center justify-between gap-3 rounded-md p-2 transition duration-300"
+                                  className="group hover:bg-background/20 flex cursor-pointer items-start justify-between gap-3 rounded-md p-2 transition duration-300"
                                 >
                                   <div className="flex items-start gap-1">
                                     <span>{entry.title}</span>

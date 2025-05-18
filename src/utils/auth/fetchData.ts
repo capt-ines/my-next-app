@@ -108,6 +108,7 @@ export const insertRow = async (
   insertObject: object,
   setRows: React.Dispatch<React.SetStateAction<object[]>>,
 ) => {
+  // TODO: const user
   const { data, error } = await supabase.from(rows).insert(insertObject);
   if (error) {
     console.error("Error adding", rows, error);

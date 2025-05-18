@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Header from "../ui/Header";
-import Footer from "../ui/Footer";
-import Particle from "./Particle";
-import { randomize } from "@/utils/randomize";
-import { useThemeContext } from "@/contexts/themeContext";
-import MouseLight from "../ui/MouseLight";
-import { Button } from "../ui/button";
-import useMediaQuery from "@/hooks/useMediaQuery";
 import { themesData } from "@/constants/themes";
+import { useThemeContext } from "@/contexts/themeContext";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { randomize } from "@/utils/randomize";
 import { useRouter } from "next/router";
-import NavIsland from "../ui/NavIsland";
+import React from "react";
+import Footer from "../ui/Footer";
+import Header from "../ui/Header";
+import MouseLight from "../ui/MouseLight";
+import Particle from "./Particle";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -73,12 +71,12 @@ function Layout({ children }: LayoutProps) {
             <Header />
           </div>
           {isJournal ? (
-            <main className="pt-18 pb-0 md:mx-8 md:pt-20 md:pb-10">
+            <main className="">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>
           ) : (
-            <main className="mx-4.5 pt-18 pb-6 md:mx-8 md:pt-20">
+            <main className="px-6 pt-20 pb-6 md:mx-8 md:px-13 md:pt-26">
               {children}
               {/* {!isHome && !isDesktop ? <NavIsland /> : null} */}
             </main>

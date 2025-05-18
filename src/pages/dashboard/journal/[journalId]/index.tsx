@@ -1,16 +1,3 @@
-import React from "react";
-import { dateFormatter } from "@/utils/dateFormatter";
-import {
-  updateRow,
-  fetchSingleRow,
-  fetchSpecificRows,
-  insertRow,
-  deleteRow,
-} from "@/utils/auth/fetchData";
-import { IoAdd } from "react-icons/io5";
-import { motion } from "framer-motion";
-import { PiSpiralFill } from "react-icons/pi";
-import { useRouter } from "next/router";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,42 +6,33 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { RxDragHandleVertical } from "react-icons/rx";
-import { Skeleton } from "@/components/ui/skeleton";
-import { createClient } from "@/utils/supabase/component";
-import dynamic from "next/dynamic";
-import { createClient as createComponentClient } from "@/utils/supabase/component";
-import Link from "next/link";
-import { PiPencilSimpleSlashThin } from "react-icons/pi";
-import { PiPencilSimpleThin } from "react-icons/pi";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RxDotsHorizontal } from "react-icons/rx";
+import Container from "@/components/ui/Container";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuPortal,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState, useEffect } from "react";
-import { IoMdJournal } from "react-icons/io";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { useUser } from "@/contexts/userContext";
-import Container from "@/components/ui/Container";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Ghost } from "lucide-react";
-import { today } from "@/utils/today";
+import { useUser } from "@/contexts/userContext";
+import {
+  deleteRow,
+  fetchSingleRow,
+  fetchSpecificRows,
+  updateRow,
+} from "@/utils/auth/fetchData";
+import { dateFormatter } from "@/utils/dateFormatter";
+import { createClient as createComponentClient } from "@/utils/supabase/component";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { IoAdd } from "react-icons/io5";
+import { RxDotsHorizontal } from "react-icons/rx";
 interface Journal {
   color: string;
   title: string;
@@ -206,24 +184,13 @@ const Journals = () => {
   // />
   return (
     <motion.section
-      className="mx-4.5 mb-10 text-center"
+      className="mb-20 pt-23 text-center md:mx-8 md:pt-25"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
     >
       <Container className="mx-auto flex max-w-xl flex-col">
-        <div className="mx-4.5 my-2 mb-4 flex justify-between">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/dashboard/">Profile</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Journal</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+        <div className="mx-4.5 my-2 mb-4 flex justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex cursor-pointer items-center gap-2">
               <RxDotsHorizontal size={20} />
@@ -301,15 +268,14 @@ const Journals = () => {
           )}
         </div>
 
-        <Button
+        <button
           onClick={() => {
             handleAddEntry();
           }}
-          variant={"ghost"}
-          className="hover:bg-muted/20 flex cursor-pointer items-center justify-center border-0 py-8 transition duration-300"
+          className="hover:bg-background/10 flex h-10 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent py-8 transition duration-300"
         >
           <IoAdd />
-        </Button>
+        </button>
 
         <hr className="text-muted-foreground/50" />
         {processedEntries.map((entry, id) => (
